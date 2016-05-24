@@ -1,0 +1,5 @@
+These examples require Vectrosity to be installed and the preprocessort symbols
+to be defined. Please consult the user manual chapter on the support for other
+Unity plugins. This step is necessary to preven the examples from throwing
+errors for users who don't have Vectrosity installed.
+
