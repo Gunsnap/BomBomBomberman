@@ -30,9 +30,7 @@ sysinfo.txt
 *.unitypackage
 
 #Vores egne
-.meta
-.asset
-
-*.log
-
+*.meta
 *.asset
+*.log
+ProjectSettings/ProjectVersion.txt
