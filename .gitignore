@@ -30,6 +30,6 @@ sysinfo.txt
 *.unitypackage
 
 #Vores egne
-*.meta
+*[Ii]con.meta
 *.asset
 *.log
