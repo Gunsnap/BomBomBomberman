@@ -39,6 +39,7 @@ public class BombSplode : MonoBehaviour {
 		Vector3 opVecDec = new Vector3 (270, 0, 0);
 		Vector3 nedVecDec = new Vector3 (270, 0, 180);
 		Vector3 venstreVecDec = new Vector3 (270, 0, 90);
+		venstreVecDec = Quaternion.AngleAxis (90, Vector3.forward).eulerAngles + Quaternion.AngleAxis (270, Vector3.right).eulerAngles;
 		Vector3 hoejreVecDec = new Vector3 (270, 0, 270);
 
 		//Center
