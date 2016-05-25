@@ -28,7 +28,7 @@ public class RoamGridVores : MonoBehaviour {
 	private float roamingSpeed;
 
 	void Start () {
-		grid = ForbiddenTilesExample.movementGrid;
+		grid = ForbiddenTiles.movementGrid;
 	
 		//make a check to prevent getting stuck in a null exception
 		if (grid) {
@@ -58,7 +58,7 @@ public class RoamGridVores : MonoBehaviour {
 			//find the next destination
 			goal = FindNextFace ();
 			//--- let's check if the goal is allowed, if not we will pick another direction during the next frame ---
-			if (ForbiddenTilesExample.CheckSquare (goal)) {
+			if (ForbiddenTiles.CheckSquare (goal)) {
 				//calculate speed by dividing distance (one of the two distances will be 0, we need the other one) through time
 				roamingSpeed = Mathf.Max (Mathf.Abs (transform.position.x - goal.x), Mathf.Abs (transform.position.y - goal.y)) / roamingTime;
 				//resume movement with the new goal
