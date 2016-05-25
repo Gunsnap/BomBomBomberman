@@ -1,36 +1,29 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class BombSplode : MonoBehaviour {
-	public float explodeSec = 2.5f;
-	public float putTime;
-	public float bombDelay = 3.5f;
-	public float timeNow;
-
-	private Spawner spawnFire;
-
-	Vector3 BombPosition;
+	float putTime;
+	public float bombDelay;
 
 	void Start () {
 		putTime = Time.time;
-		var BombObject = GameObject.Find (this.name);
-
-		BombPosition = BombObject.transform.position;
-		spawnFire = gameObject.GetComponent<Spawner> ();
+		bombDelay = 3.5f;
 	}
 
 	void Update () {
-		timeNow = Time.time;
-		if (timeNow > putTime + bombDelay)
-			removeBomb ();
+		float timeNow = Time.time;
+
+		//Når der er gået bombDelay sekunder sprænger bomben
+		if (timeNow > putTime + bombDelay) {
+			blastHallWithFire ();
+			DestroyObject (this.gameObject);
+		}
 	}
 
-	public void removeBomb () {
-		blastHallWithFire ();
-		DestroyObject (this.gameObject);
-	}
-
+	//Flammer spawnes
 	public void blastHallWithFire (float range = 3) {
+		Spawner sp = gameObject.GetComponent<Spawner> ();
+		Vector3 bombPos = transform.position;
+
 		//Retninger
 		Vector3 opVecDec = new Vector3 (270, 0, 0);
 		Vector3 nedVecDec = new Vector3 (90, 180, 0);
@@ -38,15 +31,15 @@ public class BombSplode : MonoBehaviour {
 		Vector3 venstreVecDec = new Vector3 (0, 270, 90);
 
 		//Center
-		spawnFire.SpawnSomethingAwesome (BombPosition, opVecDec);
+		sp.SpawnElement (bombPos, opVecDec);
 
 		//Mid & End
 		for (float i = 0; i <= range; i++) {
 			int element = i < range ? 1 : 2;
-			spawnFire.SpawnSomethingAwesome (BombPosition + new Vector3 (0, i, 0), opVecDec, element);//Op
-			spawnFire.SpawnSomethingAwesome (BombPosition + new Vector3 (0, -i, 0), nedVecDec, element);//Ned
-			spawnFire.SpawnSomethingAwesome (BombPosition + new Vector3 (i, 0, 0), hoejreVecDec, element);//Højre
-			spawnFire.SpawnSomethingAwesome (BombPosition + new Vector3 (-i, 0, 0), venstreVecDec, element);//Venstre
+			sp.SpawnElement (bombPos + new Vector3 (0, i, 0), opVecDec, element);//Op
+			sp.SpawnElement (bombPos + new Vector3 (0, -i, 0), nedVecDec, element);//Ned
+			sp.SpawnElement (bombPos + new Vector3 (i, 0, 0), hoejreVecDec, element);//Højre
+			sp.SpawnElement (bombPos + new Vector3 (-i, 0, 0), venstreVecDec, element);//Venstre
 		}
 	}
 

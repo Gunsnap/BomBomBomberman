@@ -9,7 +9,7 @@ public class Spawner : MonoBehaviour {
 	public GameObject[] whatToSpawnPrefab;
 	public GameObject[] whatToSpawnClone;
 
-	public void SpawnSomethingAwesome (Vector3 SpawnPos, Vector3 rot, int element = 0) {
+	public void SpawnElement (Vector3 SpawnPos, Vector3 rot, int element = 0) {
 		whatToSpawnClone [element] = Instantiate (whatToSpawnPrefab [element], SpawnPos, Quaternion.Euler (rot)) as GameObject;
 	}
 }

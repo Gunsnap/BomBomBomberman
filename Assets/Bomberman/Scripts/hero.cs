@@ -43,7 +43,7 @@ public class hero : MonoBehaviour {
 			if (Input.GetKeyDown ("space")) {
 				//nextBomb = tid + BombRate;
 				putbomb = true;
-				sp.SpawnSomethingAwesome (PlayerPos, new Vector3 (270, 0, 0));
+				sp.SpawnElement (PlayerPos, new Vector3 (270, 0, 0));
 				AllowBomb = false;
 			} else {
 				putbomb = false;
