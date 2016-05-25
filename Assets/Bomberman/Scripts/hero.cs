@@ -13,8 +13,8 @@ public class hero : MonoBehaviour {
 	public bool putbomb;
 	public float BombRate = 0.5f;
 	private bool AllowBomb;
-//	private float nextBomb = 0.0f;
-//	private int range = 1;
+	//	private float nextBomb = 0.0f;
+	//	private int range = 1;
 
 
 	// Use this for initialization
@@ -31,7 +31,7 @@ public class hero : MonoBehaviour {
 		int SekTid = (int)tid; // Tid spillet har været i gang
 
 		// player1 pos
-		Vector3 PlayerPos = GameObject.Find("Player1").transform.position;
+		Vector3 PlayerPos = GameObject.Find ("Player1").transform.position;
 
 		// Bombe
 		if (SekTidGemt < SekTid) {
@@ -40,15 +40,10 @@ public class hero : MonoBehaviour {
 		} 
 
 		if (AllowBomb) {
-			Debug.Log (PlayerPos);
-			float posX = PlayerPos.x;
-			float posY = PlayerPos.y;
-			float posZ = PlayerPos.z;
-
 			if (Input.GetKeyDown ("space")) {
 				//nextBomb = tid + BombRate;
 				putbomb = true;
-				sp.SpawnSomethingAwesome (new Vector3 (posX, posY, posZ), new Vector3(-90,0,0));
+				sp.SpawnSomethingAwesome (PlayerPos, new Vector3 (270, 0, 0));
 				AllowBomb = false;
 			} else {
 				putbomb = false;
@@ -58,5 +53,7 @@ public class hero : MonoBehaviour {
 			Debug.Log ("Du må ikke smide en bombe");
 		}
 
-	} // Lukker update
-} // Lukker class
+	}
+	// Lukker update
+}
+// Lukker class

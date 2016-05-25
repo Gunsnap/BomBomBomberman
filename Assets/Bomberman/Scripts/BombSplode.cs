@@ -16,49 +16,38 @@ public class BombSplode : MonoBehaviour {
 		var BombObject = GameObject.Find (this.name);
 
 		BombPosition = BombObject.transform.position;
-		Debug.Log (BombPosition);
 		spawnFire = gameObject.GetComponent<Spawner> ();
-		Debug.Log ("Bombe startet");
 	}
 
 	void Update () {
 		timeNow = Time.time;
-		if (timeNow > putTime + bombDelay) {
+		if (timeNow > putTime + bombDelay)
 			removeBomb ();
-		}
 	}
 
 	public void removeBomb () {
-		Debug.Log ("Fjern bombe");
 		blastHallWithFire ();
 		DestroyObject (this.gameObject);
 	}
 
 	public void blastHallWithFire (float range = 3) {
-
+		//Retninger
 		Vector3 opVecDec = new Vector3 (270, 0, 0);
-		Vector3 nedVecDec = new Vector3 (270, 0, 180);
+		Vector3 nedVecDec = new Vector3 (90, 180, 0);
+		Vector3 hoejreVecDec = new Vector3 (0, 90, 270);
 		Vector3 venstreVecDec = new Vector3 (0, 270, 90);
-		Vector3 hoejreVecDec = new Vector3 (0, 270, 180);
-
-		Debug.Log (venstreVecDec);
 
 		//Center
 		spawnFire.SpawnSomethingAwesome (BombPosition, opVecDec);
 
-		//Mid
-		for (float i = 0; i < range; i++) {
-			spawnFire.SpawnSomethingAwesome (BombPosition + new Vector3 (0, i, 0), opVecDec, 1);//Op
-			//spawnFire.SpawnSomethingAwesome (BombPosition + new Vector3 (0, -i, 0), venstreVecDec, 1);//Ned
-			//spawnFire.SpawnSomethingAwesome (BombPosition + new Vector3 (i, 0, 0), venstreVecDec, 1);//Højre
-			spawnFire.SpawnSomethingAwesome (BombPosition + new Vector3 (-i, 0, 0), venstreVecDec, 1);//Venstre
+		//Mid & End
+		for (float i = 0; i <= range; i++) {
+			int element = (i < range ? 1 : 2);
+			spawnFire.SpawnSomethingAwesome (BombPosition + new Vector3 (0, i, 0), opVecDec, element);//Op
+			spawnFire.SpawnSomethingAwesome (BombPosition + new Vector3 (0, -i, 0), nedVecDec, element);//Ned
+			spawnFire.SpawnSomethingAwesome (BombPosition + new Vector3 (i, 0, 0), hoejreVecDec, element);//Højre
+			spawnFire.SpawnSomethingAwesome (BombPosition + new Vector3 (-i, 0, 0), venstreVecDec, element);//Venstre
 		}
-
-		//End
-		//spawnFire.SpawnSomethingAwesome (new Vector3 (posX, posY + range, posZ), nulVec, 2);//Venstre
-		spawnFire.SpawnSomethingAwesome (BombPosition + new Vector3 (0, range, 0), opVecDec, 2);//Op
-		//spawnFire.SpawnSomethingAwesome (new Vector3 (posX, posY - range, posZ), new Vector3 (270, 0, 180), 2);//Højre
-		//spawnFire.SpawnSomethingAwesome (new Vector3 (posX - range, posY, posZ), new Vector3 (270, 0, 270), 2);//Ned
 	}
 
 }
