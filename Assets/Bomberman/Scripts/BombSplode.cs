@@ -42,7 +42,7 @@ public class BombSplode : MonoBehaviour {
 
 		//Mid & End
 		for (float i = 0; i <= range; i++) {
-			int element = (i < range ? 1 : 2);
+			int element = i < range ? 1 : 2;
 			spawnFire.SpawnSomethingAwesome (BombPosition + new Vector3 (0, i, 0), opVecDec, element);//Op
 			spawnFire.SpawnSomethingAwesome (BombPosition + new Vector3 (0, -i, 0), nedVecDec, element);//Ned
 			spawnFire.SpawnSomethingAwesome (BombPosition + new Vector3 (i, 0, 0), hoejreVecDec, element);//Højre
