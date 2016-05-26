@@ -11,6 +11,6 @@ public class SetupForbiddenTilesVores : MonoBehaviour {
 	}
 
 	void OnGUI () {
-		GUI.TextArea (new Rect (10, 10, 250, 200), ForbiddenTiles.MatrixToString ());
+		GUI.TextArea (new Rect (10, 10, 140, 230), ForbiddenTiles.MatrixToString ());
 	}
 }

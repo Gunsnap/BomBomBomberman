@@ -10,6 +10,7 @@ public class hero : MonoBehaviour {
 	private Spawner sp;
 
 	// Movement
+	/// <summary> The grid of the world!.</summary>
 	private GFRectGrid grid;
 	/// <summary>How long it takes to move from one tile to another.</summary>
 	public float roamingTime = 1.0f;
@@ -25,11 +26,10 @@ public class hero : MonoBehaviour {
 	private bool AllowBomb;
 	/// <summary>A bomb will be placed by animation.</summary>
 	public bool putbomb;
-	public float BombRate = 0.5f;
+	//public float BombRate = 0.5f;
 	//private float nextBomb = 0.0f;
 	//private int range = 1;
 
-	// Use this for initialization
 	void Start () {
 		Debug.Log ("HeroScript startet");
 		tidGemt = Time.time + 1f;
@@ -43,13 +43,10 @@ public class hero : MonoBehaviour {
 			grid.AlignTransform (transform);
 		}
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
-
-		float tid = Time.time;// Tid spillet har kørt
-
-		Vector3 PlayerPos = transform.position;
+		// Tid spillet har kørt.
+		float tid = Time.time;
 
 		// Bombe
 		if (tidGemt < tid) {
@@ -61,7 +58,7 @@ public class hero : MonoBehaviour {
 			if (Input.GetKeyDown ("space")) {
 				//nextBomb = tid + BombRate;
 				putbomb = true;
-				sp.SpawnElement (PlayerPos, new Vector3 (270, 0, 0));
+				sp.SpawnElement (transform.position, new Vector3 (270, 0, 0));
 				AllowBomb = false;
 			} else {
 				putbomb = false;
@@ -120,8 +117,9 @@ public class hero : MonoBehaviour {
 		else if (Input.GetKey (KeyCode.A))
 			newPosition = newPosition + new Vector3 (-1, 0, 0);
 		else {
+			//Debug.Log ("FindNextFace noKey");
 			doMove = false;
-			return transform.position;
+			return newPosition;//transform.position;
 		}
 		//if we would wander off beyond the size of the grid turn the other way around
 		for (int j = 0; j < 2; j++) {
