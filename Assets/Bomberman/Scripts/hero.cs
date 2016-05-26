@@ -9,6 +9,9 @@ public class hero : MonoBehaviour {
 	// Spawner
 	private Spawner sp;
 
+	// Animator
+	private Animator animator;
+
 	// Movement
 	/// <summary> The grid of the world!.</summary>
 	private GFRectGrid grid;
@@ -24,8 +27,6 @@ public class hero : MonoBehaviour {
 	// Bomb
 	/// <summary>A bomb may be placed.</summary>
 	private bool AllowBomb;
-	/// <summary>A bomb will be placed by animation.</summary>
-	public bool putbomb;
 	//public float BombRate = 0.5f;
 	//private float nextBomb = 0.0f;
 	//private int range = 1;
@@ -34,6 +35,7 @@ public class hero : MonoBehaviour {
 		Debug.Log ("HeroScript startet");
 		tidGemt = Time.time + 1f;
 		sp = gameObject.GetComponent<Spawner> ();
+		animator = gameObject.GetComponent<Animator> ();
 
 		grid = ForbiddenTiles.movementGrid;
 
@@ -57,11 +59,10 @@ public class hero : MonoBehaviour {
 		if (AllowBomb) {
 			if (Input.GetKeyDown ("space")) {
 				//nextBomb = tid + BombRate;
-				putbomb = true;
+				animator.SetTrigger ("PutBomb");
 				sp.SpawnElement (transform.position, new Vector3 (270, 0, 0));
 				AllowBomb = false;
 			} else {
-				putbomb = false;
 				Debug.Log ("Der må smides bombe, men der er ikke trykket");
 			}
 		} else {
@@ -79,8 +80,10 @@ public class hero : MonoBehaviour {
 			newPosition.y = Mathf.MoveTowards (transform.position.y, goal.y, roamingSpeed * Time.deltaTime);
 			transform.position = newPosition;
 			//check if we reached the destination (use a certain tolerance so we don't miss the point becase of rounding errors)
-			if (Mathf.Abs (transform.position.x - goal.x) < 0.01f && Mathf.Abs (transform.position.y - goal.y) < 0.01f)
+			if (Mathf.Abs (transform.position.x - goal.x) < 0.01f && Mathf.Abs (transform.position.y - goal.y) < 0.01f) {
 				doMove = false;
+				//FIXME animator.SetBool ("Run", false);
+			}
 			//if we did stop moving
 		} else {
 			//make sure the time is always positive
@@ -95,6 +98,7 @@ public class hero : MonoBehaviour {
 				//resume movement with the new goal
 				doMove = true;
 			} else {
+				//FIXME animator.SetBool ("Run", false);
 				Debug.Log ("hit the obstacle");
 			}
 		}
@@ -117,10 +121,12 @@ public class hero : MonoBehaviour {
 		else if (Input.GetKey (KeyCode.A))
 			newPosition = newPosition + new Vector3 (-1, 0, 0);
 		else {
-			//Debug.Log ("FindNextFace noKey");
+			animator.SetBool ("Run", false);
 			doMove = false;
-			return newPosition;//transform.position;
+			return grid.GridToWorld (newPosition);
 		}
+		animator.SetBool ("Run", true);
+
 		//if we would wander off beyond the size of the grid turn the other way around
 		for (int j = 0; j < 2; j++) {
 			if (Mathf.Abs (newPosition [j]) > grid.size [j])
