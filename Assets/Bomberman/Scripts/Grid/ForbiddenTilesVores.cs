@@ -38,7 +38,7 @@ relative to the lower left square. If your grid starts at (0,0) this would all
 be irrelevant
 */
 
-public static class ForbiddenTiles {
+public static class ForbiddenTilesVores {
 	/// <summary>Two-dimensional array of bool values.</summary>
 	/// `True` means the tile is legal to step on.
 	public static bool[,] allowedTiles;

@@ -1,16 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class hero : MonoBehaviour {
-
-	//Tid
-	static float tidGemt;
-
-	// Spawner
-	private Spawner sp;
-
-	// Animator
-	private Animator animator;
+public class MovePlayer : MonoBehaviour {
 
 	// Movement
 	/// <summary> The grid of the world!.</summary>
@@ -24,54 +15,29 @@ public class hero : MonoBehaviour {
 	/// <summary>How fast to move.</summary>
 	private float roamingSpeed;
 
-	// Bomb
-	/// <summary>A bomb may be placed.</summary>
-	private bool AllowBomb;
-	//public float BombRate = 0.5f;
-	//private float nextBomb = 0.0f;
-	//private int range = 1;
+	// Animator
+	private Animator animator;
+	public Vector3 rotation;
 
+	// Use this for initialization
 	void Start () {
-		Debug.Log ("HeroScript startet");
-		tidGemt = Time.time + 1f;
-		sp = gameObject.GetComponent<Spawner> ();
-		animator = gameObject.GetComponent<Animator> ();
-
-		grid = ForbiddenTiles.movementGrid;
+		grid = ForbiddenTilesVores.movementGrid;
 
 		//make a check to prevent getting stuck in a null exception
 		if (grid) {
 			//snap to the grid  no matter where we are
 			grid.AlignTransform (transform);
 		}
+
+		animator = gameObject.GetComponent<Animator> ();
 	}
-
+	
+	// Update is called once per frame
 	void Update () {
-		// Tid spillet har kørt.
-		float tid = Time.time;
-
-		// Bombe
-		if (tidGemt < tid) {
-			AllowBomb = true;
-			tidGemt = tid;
-		} 
-
-		if (AllowBomb) {
-			if (Input.GetKeyDown ("space")) {
-				//nextBomb = tid + BombRate;
-				animator.SetTrigger ("PutBomb");
-				sp.SpawnElement (transform.position, new Vector3 (270, 0, 0));
-				AllowBomb = false;
-			} else {
-				Debug.Log ("Der må smides bombe, men der er ikke trykket");
-			}
-		} else {
-			Debug.Log ("Du må ikke smide en bombe");
-		}
-
-
 		if (!grid)
 			return;
+
+		transform.rotation = Quaternion.Euler (rotation);
 
 		if (doMove) {
 			//move towards the desination
@@ -92,7 +58,7 @@ public class hero : MonoBehaviour {
 			//find the next destination
 			goal = FindNextFace ();
 			//--- let's check if the goal is allowed, if not we will pick another direction during the next frame ---
-			if (ForbiddenTiles.CheckSquare (goal)) {
+			if (ForbiddenTilesVores.CheckSquare (goal)) {
 				//calculate speed by dividing distance (one of the two distances will be 0, we need the other one) through time
 				roamingSpeed = Mathf.Max (Mathf.Abs (transform.position.x - goal.x), Mathf.Abs (transform.position.y - goal.y)) / roamingTime;
 				//resume movement with the new goal
@@ -102,41 +68,49 @@ public class hero : MonoBehaviour {
 				Debug.Log ("hit the obstacle");
 			}
 		}
-
 	}
-	// Lukker update
+	//Lukker Update
 
 	/** Finder ud af om man må bevæge sig i den givne retning */
 	Vector3 FindNextFace () {
 		//we will be operating in grid space, so convert the position
 		Vector3 newPosition = grid.WorldToGrid (transform.localPosition);
 
+		//Retninger
+		Vector3 opVec = new Vector3 (270, 0, 0);
+		Vector3 nedVec = new Vector3 (90, 180, 0);
+		Vector3 hoejreVec = new Vector3 (0, 90, 270);
+		Vector3 venstreVec = new Vector3 (0, 270, 90);
+
 		//Add one grid unit onto position in the picked direction
-		if (Input.GetKey (KeyCode.W))
+		if (Input.GetKey (KeyCode.W)) {
 			newPosition = newPosition + new Vector3 (0, 1, 0);
-		else if (Input.GetKey (KeyCode.S))
+			rotation = opVec;
+		} else if (Input.GetKey (KeyCode.S)) {
 			newPosition = newPosition + new Vector3 (0, -1, 0);
-		else if (Input.GetKey (KeyCode.D))
+			rotation = nedVec;
+		} else if (Input.GetKey (KeyCode.D)) {
 			newPosition = newPosition + new Vector3 (1, 0, 0);
-		else if (Input.GetKey (KeyCode.A))
+			rotation = hoejreVec;
+		} else if (Input.GetKey (KeyCode.A)) {
 			newPosition = newPosition + new Vector3 (-1, 0, 0);
-		else {
+			rotation = venstreVec;
+		} else {
 			animator.SetBool ("Run", false);
 			doMove = false;
 			return grid.GridToWorld (newPosition);
 		}
 		animator.SetBool ("Run", true);
 
+		/* Understående skaber problemer da det på en eller anden måde tror at grid.size altid er 5x5
 		//if we would wander off beyond the size of the grid turn the other way around
 		for (int j = 0; j < 2; j++) {
+			Debug.Log ("newPosition [j] " + Mathf.Abs (newPosition [j]) + " > grid.size [j] " + grid.size [j]);
 			if (Mathf.Abs (newPosition [j]) > grid.size [j])
-				newPosition [j] -= Mathf.Sign (newPosition [j]) * 2.0f;
-		}
-
+				newPosition [j] -= Mathf.Sign (newPosition [j]) * 1.0f;
+		}*/
 		//return the position in world space
 		return grid.GridToWorld (newPosition);
 	}
 	// Lukker FindNextFace
-
 }
-// Lukker class

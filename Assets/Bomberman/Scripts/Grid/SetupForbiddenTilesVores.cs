@@ -7,10 +7,10 @@ public class SetupForbiddenTilesVores : MonoBehaviour {
 	void Awake () {
 		//We will build the matrix based on the grid that is attached to this object.
 		//All entries are true by default, then each obstacle will mark its entry as false
-		ForbiddenTiles.Initialize (GetComponent<GFRectGrid> ());
+		ForbiddenTilesVores.Initialize (GetComponent<GFRectGrid> ());
 	}
 
 	void OnGUI () {
-		GUI.TextArea (new Rect (10, 10, 140, 230), ForbiddenTiles.MatrixToString ());
+		GUI.TextArea (new Rect (10, 10, 140, 230), ForbiddenTilesVores.MatrixToString ());
 	}
 }
