@@ -17,7 +17,7 @@ public class MovePlayer : MonoBehaviour {
 
 	// Animator
 	private Animator animator;
-	public Vector3 rotation;
+	Vector3 rotation;
 
 	// Use this for initialization
 	void Start () {
@@ -30,15 +30,14 @@ public class MovePlayer : MonoBehaviour {
 		}
 
 		animator = gameObject.GetComponent<Animator> ();
+		rotation = new Vector3 (270, 0, 0);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (!grid)
 			return;
-
-		transform.rotation = Quaternion.Euler (rotation);
-
+		
 		if (doMove) {
 			//move towards the desination
 			Vector3 newPosition = transform.position;
@@ -48,9 +47,12 @@ public class MovePlayer : MonoBehaviour {
 			//check if we reached the destination (use a certain tolerance so we don't miss the point becase of rounding errors)
 			if (Mathf.Abs (transform.position.x - goal.x) < 0.01f && Mathf.Abs (transform.position.y - goal.y) < 0.01f) {
 				doMove = false;
-				//FIXME animator.SetBool ("Run", false);
 			}
 			//if we did stop moving
+
+			// Set animation og rotation så det passer med bevægelsen
+			animator.SetBool ("Run", doMove ? true : false);
+			transform.rotation = Quaternion.Euler (rotation);
 		} else {
 			//make sure the time is always positive
 			if (roamingTime < 0.01f)
@@ -64,7 +66,6 @@ public class MovePlayer : MonoBehaviour {
 				//resume movement with the new goal
 				doMove = true;
 			} else {
-				//FIXME animator.SetBool ("Run", false);
 				Debug.Log ("hit the obstacle");
 			}
 		}
@@ -96,11 +97,8 @@ public class MovePlayer : MonoBehaviour {
 			newPosition = newPosition + new Vector3 (-1, 0, 0);
 			rotation = venstreVec;
 		} else {
-			animator.SetBool ("Run", false);
 			doMove = false;
-			return grid.GridToWorld (newPosition);
 		}
-		animator.SetBool ("Run", true);
 
 		/* Understående skaber problemer da det på en eller anden måde tror at grid.size altid er 5x5
 		//if we would wander off beyond the size of the grid turn the other way around
@@ -109,6 +107,7 @@ public class MovePlayer : MonoBehaviour {
 			if (Mathf.Abs (newPosition [j]) > grid.size [j])
 				newPosition [j] -= Mathf.Sign (newPosition [j]) * 1.0f;
 		}*/
+
 		//return the position in world space
 		return grid.GridToWorld (newPosition);
 	}

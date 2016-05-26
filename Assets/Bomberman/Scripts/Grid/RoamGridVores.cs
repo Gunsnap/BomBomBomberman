@@ -27,8 +27,12 @@ public class RoamGridVores : MonoBehaviour {
 	/// <summary>How fast to move.</summary>
 	private float roamingSpeed;
 
+	private Animator ani;
+	Vector3 rotation = Vector3.zero;
+
 	void Start () {
 		grid = ForbiddenTilesVores.movementGrid;
+		ani = gameObject.GetComponent <Animator> ();
 	
 		//make a check to prevent getting stuck in a null exception
 		if (grid) {
@@ -72,19 +76,31 @@ public class RoamGridVores : MonoBehaviour {
 	Vector3 FindNextFace () {
 		//we will be operating in grid space, so convert the position
 		Vector3 newPosition = grid.WorldToGrid (transform.position);
+
+		//Retninger
+		Vector3 opVec = new Vector3 (270, 0, 0);
+		Vector3 nedVec = new Vector3 (90, 180, 0);
+		Vector3 hoejreVec = new Vector3 (0, 90, 270);
+		Vector3 venstreVec = new Vector3 (0, 270, 90);
 		
 		//first let's pick a random number for one of the four possible directions
 		int i = Random.Range (0, 4);
 		//now add one grid unit onto position in the picked direction
 		if (i == 0) {
 			newPosition = newPosition + new Vector3 (1, 0, 0);
+			rotation = hoejreVec;
 		} else if (i == 1) {
 			newPosition = newPosition + new Vector3 (-1, 0, 0);
+			rotation = venstreVec;
 		} else if (i == 2) {
 			newPosition = newPosition + new Vector3 (0, 1, 0);
+			rotation = opVec;
 		} else if (i == 3) {
 			newPosition = newPosition + new Vector3 (0, -1, 0);
+			rotation = nedVec;
 		}
+		ani.SetBool ("Run", true);
+		transform.rotation = Quaternion.Euler (rotation);
 		//if we would wander off beyond the size of the grid turn the other way around
 		/*for (int j = 0; j < 2; j++) {
 			if (Mathf.Abs (newPosition [j]) > grid.size [j])

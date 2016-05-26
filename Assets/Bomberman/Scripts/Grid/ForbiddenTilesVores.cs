@@ -112,8 +112,14 @@ public static class ForbiddenTilesVores {
 	/// Use it to cheack if a square is forbidden or not.
 	public static bool CheckSquare (Vector3 vec) {
 		int[] square = GetSquare (vec);
-		//Debug.Log (vec + ": " + square [0] + "/" + square [1]);
-		return allowedTiles [square [0], square [1]];
+		//Har tilføjet en if/else for at det ikke skulle lave fejl - DVS
+		if (square [0] != -1 && square [1] != -1 &&
+		    square [0] != 11 && square [1] != 11) {
+			return allowedTiles [square [0], square [1]];
+		} else {
+			//Debug.Log (vec + ": " + square [0] + "/" + square [1]);
+			return false;
+		}
 	}
 
 	/// <summary>Takes world coodinates and finds the corresponding square.</summary>

@@ -10,7 +10,7 @@ public class hero : MonoBehaviour {
 	private Spawner sp;
 
 	/// Bruges til at animere spilleren
-	private Animator animator;
+	public Animator animator;
 
 	// Bomb
 	/// A bomb may be placed.
