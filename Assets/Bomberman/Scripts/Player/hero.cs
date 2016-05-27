@@ -55,18 +55,26 @@ public class hero : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 
 		string playerColli = other.name;
-
-		if(playerColli.Contains("Speed-UpPickup")){
+		Debug.Log (playerColli);
+		if (playerColli.Contains ("Speed-UpPickup")) {
 			DestroyObject (other.gameObject);
 
 			MovePlayer mover;
 			mover = gameObject.GetComponent<MovePlayer> ();
 			mover.roamingTime -= 0.1f;
-		} else if (playerColli.Contains("Fire-UpPickup")) {
+		} else if (playerColli.Contains ("Fire-UpPickup")) {
 			DestroyObject (other.gameObject);
 			range++;
-		} else if (playerColli.Contains("Explosion")) {
-			Debug.Log ("Du' døøøøj");
+		} else if (playerColli.Contains ("Beam")) {
+
+			MovePlayer mover;
+			mover = gameObject.GetComponent<MovePlayer> ();
+			mover.doMove = false;
+			mover.allowMove = false;
+
+			Animator playerAni = gameObject.GetComponent<Animator> ();
+			playerAni.SetBool ("Win", false);
+			playerAni.SetTrigger ("GameEnd");
 		}
 
 	}

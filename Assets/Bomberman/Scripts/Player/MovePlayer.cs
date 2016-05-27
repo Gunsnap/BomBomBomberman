@@ -9,11 +9,14 @@ public class MovePlayer : MonoBehaviour {
 	/// <summary>How long it takes to move from one tile to another.</summary>
 	public float roamingTime = 1.0f;
 	/// <summary>Whether the object is to move or not.</summary>
-	private bool doMove = false;
+	public bool doMove = false;
 	/// <summary>Where the object will move to.</summary>
 	private Vector3 goal;
 	/// <summary>How fast to move.</summary>
 	private float roamingSpeed;
+
+	// Player dead
+	public bool allowMove = true;
 
 	// Animator
 	private Animator animator;
@@ -35,38 +38,41 @@ public class MovePlayer : MonoBehaviour {
 	void Update () {
 		if (!grid)
 			return;
-		
-		if (doMove) {
-			//move towards the desination
-			Vector3 newPosition = transform.position;
-			newPosition.x = Mathf.MoveTowards (transform.position.x, goal.x, roamingSpeed * Time.deltaTime);
-			newPosition.y = Mathf.MoveTowards (transform.position.y, goal.y, roamingSpeed * Time.deltaTime);
-			transform.position = newPosition;
-			//check if we reached the destination (use a certain tolerance so we don't miss the point becase of rounding errors)
-			if (Mathf.Abs (transform.position.x - goal.x) < 0.01f && Mathf.Abs (transform.position.y - goal.y) < 0.01f) {
-				doMove = false;
-			}
-			//if we did stop moving
+		if(allowMove) {
+			if (doMove) {
+				//move towards the desination
+				Vector3 newPosition = transform.position;
+				newPosition.x = Mathf.MoveTowards (transform.position.x, goal.x, roamingSpeed * Time.deltaTime);
+				newPosition.y = Mathf.MoveTowards (transform.position.y, goal.y, roamingSpeed * Time.deltaTime);
+				transform.position = newPosition;
+				//check if we reached the destination (use a certain tolerance so we don't miss the point becase of rounding errors)
+				if (Mathf.Abs (transform.position.x - goal.x) < 0.01f && Mathf.Abs (transform.position.y - goal.y) < 0.01f) {
+					doMove = false;
+				}
+				//if we did stop moving
 
-			// Set animation og rotation så det passer med bevægelsen
-			animator.SetBool ("Run", doMove ? true : false);
-			transform.rotation = Quaternion.Euler (rotation);
-		} else {
-			//make sure the time is always positive
-			if (roamingTime < 0.01f)
-				roamingTime = 0.01f;
-			//find the next destination
-			goal = FindNextFace ();
-			//--- let's check if the goal is allowed, if not we will pick another direction during the next frame ---
-			if (ForbiddenTilesVores.CheckSquare (goal)) {
-				//calculate speed by dividing distance (one of the two distances will be 0, we need the other one) through time
-				roamingSpeed = Mathf.Max (Mathf.Abs (transform.position.x - goal.x), Mathf.Abs (transform.position.y - goal.y)) / roamingTime;
-				//resume movement with the new goal
-				doMove = true;
+				// Set animation og rotation så det passer med bevægelsen
+				animator.SetBool ("Run", doMove ? true : false);
+				transform.rotation = Quaternion.Euler (rotation);
 			} else {
-				Debug.Log ("hit the obstacle");
+				//make sure the time is always positive
+				if (roamingTime < 0.01f)
+					roamingTime = 0.01f;
+				//find the next destination
+				goal = FindNextFace ();
+				//--- let's check if the goal is allowed, if not we will pick another direction during the next frame ---
+				if (ForbiddenTilesVores.CheckSquare (goal)) {
+					//calculate speed by dividing distance (one of the two distances will be 0, we need the other one) through time
+					roamingSpeed = Mathf.Max (Mathf.Abs (transform.position.x - goal.x), Mathf.Abs (transform.position.y - goal.y)) / roamingTime;
+					//resume movement with the new goal
+					doMove = true;
+				} else {
+					Debug.Log ("hit the obstacle");
+				}
 			}
 		}
+
+
 	}
 	//Lukker Update
 

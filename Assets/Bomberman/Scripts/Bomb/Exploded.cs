@@ -18,11 +18,7 @@ public class Exploded : MonoBehaviour {
 	}
 
 	void OnTriggerEnter (Collider other) {
-		if (other.name.Contains ("Player")) {
-			Animator playerAni = other.gameObject.GetComponent<hero> ().animator;
-			playerAni.SetBool ("Win", false);
-			playerAni.SetTrigger ("GameEnd");
-		} else if (other.name.Contains ("BrickBlock")) {
+		if (other.name.Contains ("BrickBlock")) {
 			BombeRamt (other);
 		}
 	}
