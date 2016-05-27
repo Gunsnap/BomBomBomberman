@@ -13,7 +13,7 @@ public class MovePlayer : MonoBehaviour {
 	/// <summary>Where the object will move to.</summary>
 	private Vector3 goal;
 	/// <summary>How fast to move.</summary>
-	private float roamingSpeed;
+	public float roamingSpeed;
 
 	// Animator
 	private Animator animator;

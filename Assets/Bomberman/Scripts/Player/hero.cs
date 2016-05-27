@@ -58,8 +58,14 @@ public class hero : MonoBehaviour {
 
 		if(playerColli.Contains("Speed-UpPickup")){
 			DestroyObject (other.gameObject);
+
+			MovePlayer mover;
+			mover = gameObject.GetComponent<MovePlayer> ();
+			mover.roamingTime -= 0.1f;
 		} else if (playerColli.Contains("Fire-UpPickup")) {
 			DestroyObject (other.gameObject);
+
+
 		} else if (playerColli.Contains("Explosion")) {
 			Debug.Log ("Du' døøøøj");
 		}

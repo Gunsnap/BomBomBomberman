@@ -9,7 +9,11 @@ public class Spawner : MonoBehaviour {
 	public GameObject[] whatToSpawnPrefab;
 	public GameObject[] whatToSpawnClone;
 
-	public void SpawnElement (Vector3 SpawnPos, Vector3 rot, int element = 0) {
+	public void SpawnElement (Vector3 SpawnPos, Vector3 rot, int element = 0, int range = 1) {
+		if (whatToSpawnPrefab [element].name.Contains ("TNT")) {
 		whatToSpawnClone [element] = Instantiate (whatToSpawnPrefab [element], SpawnPos, Quaternion.Euler (rot)) as GameObject;
+		} else {
+		whatToSpawnClone [element] = Instantiate (whatToSpawnPrefab [element], SpawnPos, Quaternion.Euler (rot)) as GameObject;
+		}
 	}
 }
