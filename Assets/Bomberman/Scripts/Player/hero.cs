@@ -51,5 +51,20 @@ public class hero : MonoBehaviour {
 	}
 	// Lukker update
 
+
+	void OnTriggerEnter(Collider other) {
+
+		string playerColli = other.name;
+
+		if(playerColli.Contains("Speed-UpPickup")){
+			DestroyObject (other.gameObject);
+		} else if (playerColli.Contains("Fire-UpPickup")) {
+			DestroyObject (other.gameObject);
+		} else if (playerColli.Contains("Explosion")) {
+			Debug.Log ("Du' døøøøj");
+		}
+
+	}
+
 }
 // Lukker class
