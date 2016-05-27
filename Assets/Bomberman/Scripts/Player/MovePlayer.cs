@@ -13,13 +13,12 @@ public class MovePlayer : MonoBehaviour {
 	/// <summary>Where the object will move to.</summary>
 	private Vector3 goal;
 	/// <summary>How fast to move.</summary>
-	public float roamingSpeed;
+	private float roamingSpeed;
 
 	// Animator
 	private Animator animator;
 	Vector3 rotation;
 
-	// Use this for initialization
 	void Start () {
 		grid = ForbiddenTilesVores.movementGrid;
 
@@ -32,8 +31,7 @@ public class MovePlayer : MonoBehaviour {
 		animator = gameObject.GetComponent<Animator> ();
 		rotation = new Vector3 (270, 0, 0);
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		if (!grid)
 			return;
@@ -99,14 +97,6 @@ public class MovePlayer : MonoBehaviour {
 		} else {
 			doMove = false;
 		}
-
-		/* Understående skaber problemer da det på en eller anden måde tror at grid.size altid er 5x5
-		//if we would wander off beyond the size of the grid turn the other way around
-		for (int j = 0; j < 2; j++) {
-			Debug.Log ("newPosition [j] " + Mathf.Abs (newPosition [j]) + " > grid.size [j] " + grid.size [j]);
-			if (Mathf.Abs (newPosition [j]) > grid.size [j])
-				newPosition [j] -= Mathf.Sign (newPosition [j]) * 1.0f;
-		}*/
 
 		//return the position in world space
 		return grid.GridToWorld (newPosition);

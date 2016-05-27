@@ -8,6 +8,10 @@ public class BombSplode : MonoBehaviour {
 	void Start () {
 		putTime = Time.time;
 		bombDelay = 3.5f;
+		//Vector3 newPosition = transform.position;
+		//newPosition.x = Mathf.MoveTowards (transform.position.x, goal.x, 1f);
+		//newPosition.y = Mathf.MoveTowards (transform.position.y, goal.y, 1f);
+		//transform.position = newPosition;
 	}
 
 	void Update () {
