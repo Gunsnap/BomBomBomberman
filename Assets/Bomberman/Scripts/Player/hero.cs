@@ -17,7 +17,7 @@ public class hero : MonoBehaviour {
 	private bool AllowBomb;
 	//public float BombRate = 0.5f;
 	//private float nextBomb = 0.0f;
-	//private int range = 1;
+	private int range = 0;
 
 	void Start () {
 		tidGemt = Time.time + 1f;
@@ -39,7 +39,7 @@ public class hero : MonoBehaviour {
 			if (Input.GetKeyDown ("space")) {
 				//nextBomb = tid + BombRate;
 				animator.SetTrigger ("PutBomb");
-				sp.SpawnElement (transform.position, new Vector3 (270, 0, 0));
+				sp.SpawnElement (transform.position, new Vector3 (270, 0, 0), 0,range);
 				AllowBomb = false;
 			} else {
 				Debug.Log ("Der må smides bombe, men der er ikke trykket");
@@ -64,8 +64,7 @@ public class hero : MonoBehaviour {
 			mover.roamingTime -= 0.1f;
 		} else if (playerColli.Contains("Fire-UpPickup")) {
 			DestroyObject (other.gameObject);
-
-
+			range++;
 		} else if (playerColli.Contains("Explosion")) {
 			Debug.Log ("Du' døøøøj");
 		}

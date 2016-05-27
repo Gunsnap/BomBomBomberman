@@ -3,6 +3,7 @@
 public class BombSplode : MonoBehaviour {
 	float putTime;
 	public float bombDelay;
+	public float range;
 
 	void Start () {
 		putTime = Time.time;
@@ -20,7 +21,7 @@ public class BombSplode : MonoBehaviour {
 	}
 
 	//Flammer spawnes
-	public void blastHallWithFire (float range = 3) {
+	public void blastHallWithFire () {
 		Spawner sp = gameObject.GetComponent<Spawner> ();
 		Vector3 bombPos = transform.position;
 
