@@ -87,3 +87,7 @@ sysinfo.txt
 *.asset
 Library/LastSceneManagerSetup.txt
 Library/InspectorExpandedItems.asset
+
+Assets/Bomberman/Prefabs/Blocks.meta
+
+Assets/Bomberman/Prefabs/Player.meta
