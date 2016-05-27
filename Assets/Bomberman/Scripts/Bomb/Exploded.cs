@@ -23,11 +23,20 @@ public class Exploded : MonoBehaviour {
 			playerAni.SetBool ("Win", false);
 			playerAni.SetTrigger ("GameEnd");
 		} else if (other.name.Contains ("BrickBlock")) {
-			if (Random.Range (0, 2) == 1) {
-				Spawner sp = other.gameObject.GetComponent<Spawner> ();
-				sp.SpawnElement (other.transform.position, new Vector3 (270, 0, 0), Random.Range (0, 2));
-			}
-			DestroyObject (other.gameObject);
+			BombeRamt (other);
 		}
 	}
+
+	static void BombeRamt (Collider other) {
+		//Spawn pickUp
+		if (Random.Range (0, 2) == 1) {
+			Spawner sp = other.gameObject.GetComponent<Spawner> ();
+			sp.SpawnElement (other.transform.position, new Vector3 (270, 0, 0), Random.Range (0, 2));
+		}
+
+		//Updater Grid
+		DestroyObject (other.gameObject);
+		ForbiddenTilesVores.RegisterSquare (other.gameObject.transform.position, true);
+	}
+
 }
