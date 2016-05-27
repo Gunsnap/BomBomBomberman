@@ -73,11 +73,11 @@ public class hero : MonoBehaviour {
 			mover.allowMove = false;
 
 			Animator playerAni = gameObject.GetComponent<Animator> ();
+			playerAni.SetBool ("Run", false);
 			playerAni.SetBool ("Win", false);
 			playerAni.SetTrigger ("GameEnd");
 		}
 
 	}
-
 }
 // Lukker class
