@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class hero : MonoBehaviour {
 	
@@ -37,9 +38,14 @@ public class hero : MonoBehaviour {
 
 		if (AllowBomb) {
 			if (Input.GetKeyDown ("space")) {
-				//nextBomb = tid + BombRate;
 				animator.SetTrigger ("PutBomb");
-				sp.SpawnElement (transform.position, new Vector3 (270, 0, 0), 0,range);
+
+				// Placer bomben i grid
+				Vector3 placePos = transform.position;
+				placePos.x = (int)placePos.x + .5f;
+				placePos.y = (int)placePos.y + .5f;
+				sp.SpawnElement (placePos, new Vector3 (270, 0, 0), 0, range);
+
 				AllowBomb = false;
 			} else {
 				Debug.Log ("Der må smides bombe, men der er ikke trykket");
@@ -52,7 +58,7 @@ public class hero : MonoBehaviour {
 	// Lukker update
 
 
-	void OnTriggerEnter(Collider other) {
+	void OnTriggerEnter (Collider other) {
 
 		string playerColli = other.name;
 		Debug.Log (playerColli);

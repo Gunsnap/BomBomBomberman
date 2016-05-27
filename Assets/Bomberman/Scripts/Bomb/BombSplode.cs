@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class BombSplode : MonoBehaviour {
 	float putTime;
@@ -8,16 +8,6 @@ public class BombSplode : MonoBehaviour {
 	void Start () {
 		putTime = Time.time;
 		bombDelay = 3.5f;
-		Vector3 newPosition = transform.position;
-		Vector3 goal = newPosition;
-		goal.x = Mathf.RoundToInt (goal.x) + .5f;
-		goal.y = Mathf.RoundToInt (goal.y) + .5f;
-		goal.z = 1f;
-		newPosition.x = Mathf.MoveTowards (transform.position.x, goal.x, .75f);
-		newPosition.y = Mathf.MoveTowards (transform.position.y, goal.y, .75f);
-		newPosition.y = Mathf.MoveTowards (transform.position.z, goal.z, 1f);
-		transform.position = goal;
-		//FIXME rammer ikke altid de rigtige felter
 	}
 
 	void Update () {
