@@ -16,28 +16,25 @@ using System.Collections;
 /// Definition is separated in multiple files using a partial
 /// class definition.
 /// </summary>
-public partial class TransformUtil : EditorWindow
-{
+public partial class TransformUtil : EditorWindow {
 	/// <summary>
 	/// Unity OnEnable function, uses onSceneGUIDelegate to enable drawing 
 	/// the grid in the scene view with DrawInScene() function.
 	/// </summary>
-	void OnEnable()
-	{
+	void OnEnable () {
 		SceneView.onSceneGUIDelegate = DrawInScene;
 	}
-	
+
 	
 	/// <summary>
 	/// Shows the config and control window in Unity.
 	/// </summary>
-	private static void SettingsGUI()
-	{
-		TransformUtil tu = (TransformUtil) GetWindow<TransformUtil>();
-		tu.title = "Transform Util";
-		tu.Show();
+	private static void SettingsGUI () {
+		TransformUtil tu = (TransformUtil)GetWindow<TransformUtil> ();
+		tu.titleContent.text = "Transform Util"; //DVS har ændret tu.title til tu.titleContent.text da den anden er obsolete
+		tu.Show ();
 	}
-	
+
 	
 	/// <summary>
 	/// This is the delegate function given to SceneView.onSceneGUIDelegate
@@ -46,19 +43,15 @@ public partial class TransformUtil : EditorWindow
 	/// <param name="sv">
 	/// A <see cref="SceneView"/>
 	/// </param>
-	static void DrawInScene(SceneView sv)
-	{
-		if (showGridXZ)
-		{
-			DrawXZGrid();
+	static void DrawInScene (SceneView sv) {
+		if (showGridXZ) {
+			DrawXZGrid ();
 		}
-		if (showGridYX)
-		{
-			DrawYXGrid();
+		if (showGridYX) {
+			DrawYXGrid ();
 		}
-		if (showGridYZ)
-		{
-			DrawYZGrid();
+		if (showGridYZ) {
+			DrawYZGrid ();
 		}
 	}
 }
