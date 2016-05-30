@@ -37,16 +37,19 @@ public class BombSplode : MonoBehaviour {
 		//Mid & End
 		for (float i = 0; i <= range; i++) {
 			int element = i < range ? 1 : 2;
-			sp.SpawnElement (bombPos + new Vector3 (0, i, 0), opVecDec, element);//Op
+			GameObject senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (0, i, 0), opVecDec, element);//Op
+			Debug.Log ("sp |> " + senesteFlamme);
+			Debug.Log ("sp.BoxCollider.Collider |> " + (Collider)(senesteFlamme.GetComponent<BoxCollider> ().GetComponent<Collider> ()));
+			Debug.Log ("sp.Exploded |> " + senesteFlamme.GetComponent<Exploded> ());
 
-			//FIXME
-			Exploded flamme = sp.whatToSpawnClone [element].gameObject.GetComponent<Exploded> ();
-			//Collider bc = flamme.GetComponent<Collider> ();
-			//Debug.Log ("Collider " + bc.name);
+			senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (0, -i, 0), nedVecDec, element);//Ned
+			//Debug.Log ("Spawnede er " + senesteFlamme.GetComponent<BoxCollider> ());
 
-			sp.SpawnElement (bombPos + new Vector3 (0, -i, 0), nedVecDec, element);//Ned
-			sp.SpawnElement (bombPos + new Vector3 (i, 0, 0), hoejreVecDec, element);//Højre
-			sp.SpawnElement (bombPos + new Vector3 (-i, 0, 0), venstreVecDec, element);//Venstre
+			senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (i, 0, 0), hoejreVecDec, element);//Højre
+			//Debug.Log ("Spawnede er " + senesteFlamme.GetComponent<BoxCollider> ());
+
+			senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (-i, 0, 0), venstreVecDec, element);//Venstre
+			//Debug.Log ("Spawnede er " + senesteFlamme.GetComponent<BoxCollider> ());
 		}
 	}
 

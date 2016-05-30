@@ -22,9 +22,9 @@ public class Exploded : MonoBehaviour {
 		}
 	}
 
-	/*
-	 * FIXME bliver ikke kaldt!
+	/** FIXME bliver ikke kaldt! */
 	void OnCollisionEnter (Collision coll) {
+		Debug.Log ("COLLISION");
 		Collider[] tmpCols = others;
 		others = new Collider[others.Length + 1];
 		for (int i = 0; i < tmpCols.Length; i++) {
@@ -34,7 +34,7 @@ public class Exploded : MonoBehaviour {
 		foreach (Collider col in others) {
 			Debug.Log (name + " ramte " + col.name);
 		}
-	}*/
+	}
 
 	void OnTriggerEnter (Collider other) {
 		if (other.name.Contains ("BrickBlock")) {

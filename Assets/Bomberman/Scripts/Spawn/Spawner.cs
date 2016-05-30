@@ -9,7 +9,7 @@ public class Spawner : MonoBehaviour {
 	public GameObject[] whatToSpawnPrefab;
 	public GameObject[] whatToSpawnClone;
 
-	public void SpawnElement (Vector3 SpawnPos, Vector3 rot, int element = 0, int range = 0) {
+	public GameObject SpawnElement (Vector3 SpawnPos, Vector3 rot, int element = 0, int range = 0) {
 		if (whatToSpawnPrefab [element].name.Contains ("TNT")) {
 			whatToSpawnClone [element] = (GameObject)Instantiate (whatToSpawnPrefab [element], SpawnPos, Quaternion.Euler (rot));
 			BombSplode bomb = whatToSpawnClone [element].gameObject.GetComponent<BombSplode> ();
@@ -17,5 +17,7 @@ public class Spawner : MonoBehaviour {
 		} else {
 			whatToSpawnClone [element] = (GameObject)Instantiate (whatToSpawnPrefab [element], SpawnPos, Quaternion.Euler (rot));
 		}
+
+		return whatToSpawnClone [element];
 	}
 }
