@@ -15,7 +15,7 @@ public class hero : MonoBehaviour {
 
 	// Bomb
 	/// A bomb may be placed.
-	private bool AllowBomb;
+	private bool AllowBomb = false;
 	//public float BombRate = 0.5f;
 	//private float nextBomb = 0.0f;
 	private int range = 0;
@@ -37,18 +37,20 @@ public class hero : MonoBehaviour {
 		} 
 
 		if (AllowBomb) {
-			if (Input.GetKeyDown ("space")) {
-				animator.SetTrigger ("PutBomb");
+			if (name.Equals ("Player1")) {
+				if (Input.GetKeyDown ("space")) {
+					animator.SetTrigger ("PutBomb");
 
-				// Placer bomben i grid
-				Vector3 placePos = transform.position;
-				placePos.x = (int)placePos.x + .5f;
-				placePos.y = (int)placePos.y + .5f;
-				sp.SpawnElement (placePos, new Vector3 (270, 0, 0), 0, range);
+					// Placer bomben i grid
+					Vector3 placePos = transform.position;
+					placePos.x = (int)placePos.x + .5f;
+					placePos.y = (int)placePos.y + .5f;
+					sp.SpawnElement (placePos, new Vector3 (270, 0, 0), 0, range);
 
-				AllowBomb = false;
-			} else {
-				Debug.Log ("Der må smides bombe, men der er ikke trykket");
+					AllowBomb = false;
+				} else {
+					Debug.Log ("Der må smides bombe, men der er ikke trykket");
+				}
 			}
 		} else {
 			Debug.Log ("Du må ikke smide en bombe");
