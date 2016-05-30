@@ -22,8 +22,8 @@ public class hero : MonoBehaviour {
 
 	void Start () {
 		tidGemt = Time.time + 1f;
-		sp = gameObject.GetComponent<Spawner> ();
-		animator = gameObject.GetComponent<Animator> ();
+		sp = GetComponent<Spawner> ();
+		animator = GetComponent<Animator> ();
 	}
 
 	void Update () {
@@ -63,24 +63,22 @@ public class hero : MonoBehaviour {
 	void OnTriggerEnter (Collider other) {
 
 		string playerColli = other.name;
-		Debug.Log (playerColli);
 		if (playerColli.Contains ("Speed-UpPickup")) {
 			DestroyObject (other.gameObject);
 
 			MovePlayer mover;
-			mover = gameObject.GetComponent<MovePlayer> ();
+			mover = GetComponent<MovePlayer> ();
 			mover.roamingTime -= 0.1f;
 		} else if (playerColli.Contains ("Fire-UpPickup")) {
 			DestroyObject (other.gameObject);
 			range++;
 		} else if (playerColli.Contains ("Beam")) {
-
 			MovePlayer mover;
-			mover = gameObject.GetComponent<MovePlayer> ();
+			mover = GetComponent<MovePlayer> ();
 			mover.doMove = false;
 			mover.allowMove = false;
 
-			Animator playerAni = gameObject.GetComponent<Animator> ();
+			Animator playerAni = GetComponent<Animator> ();
 			playerAni.SetBool ("Run", false);
 			playerAni.SetBool ("Win", false);
 			playerAni.SetTrigger ("GameEnd");

@@ -38,7 +38,7 @@ public class MovePlayer : MonoBehaviour {
 	void Update () {
 		if (!grid)
 			return;
-		if(allowMove) {
+		if (allowMove) {
 			if (doMove) {
 				//move towards the desination
 				Vector3 newPosition = transform.position;
@@ -67,7 +67,7 @@ public class MovePlayer : MonoBehaviour {
 					//resume movement with the new goal
 					doMove = true;
 				} else {
-					Debug.Log ("hit the obstacle");
+					//Debug.Log ("hit the obstacle");
 				}
 			}
 		}

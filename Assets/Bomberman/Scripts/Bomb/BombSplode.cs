@@ -38,7 +38,12 @@ public class BombSplode : MonoBehaviour {
 		for (float i = 0; i <= range; i++) {
 			int element = i < range ? 1 : 2;
 			sp.SpawnElement (bombPos + new Vector3 (0, i, 0), opVecDec, element);//Op
-			Debug.Log (sp.whatToSpawnClone [element].gameObject.GetComponent<Collider> ().gameObject.name);
+
+			//FIXME
+			Exploded flamme = sp.whatToSpawnClone [element].gameObject.GetComponent<Exploded> ();
+			//Collider bc = flamme.GetComponent<Collider> ();
+			//Debug.Log ("Collider " + bc.name);
+
 			sp.SpawnElement (bombPos + new Vector3 (0, -i, 0), nedVecDec, element);//Ned
 			sp.SpawnElement (bombPos + new Vector3 (i, 0, 0), hoejreVecDec, element);//Højre
 			sp.SpawnElement (bombPos + new Vector3 (-i, 0, 0), venstreVecDec, element);//Venstre

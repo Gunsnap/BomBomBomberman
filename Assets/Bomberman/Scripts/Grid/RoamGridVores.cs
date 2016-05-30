@@ -68,7 +68,7 @@ public class RoamGridVores : MonoBehaviour {
 				//resume movement with the new goal
 				doMove = true;
 			} else {
-				Debug.Log ("hit the obstacle");
+				//Debug.Log ("hit the obstacle");
 			}
 		}
 	}
