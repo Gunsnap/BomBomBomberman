@@ -3,10 +3,6 @@ using System.Collections;
 using System;
 
 public class hero : MonoBehaviour {
-	
-	/// Bruges den ikke kun som et startdelay? - DVS
-	static float tidGemt;
-
 	/// Bruges til at smide en bombe
 	private Spawner sp;
 
@@ -14,28 +10,19 @@ public class hero : MonoBehaviour {
 	public Animator animator;
 
 	// Bomb
-	/// A bomb may be placed.
-	bool maxBomb = false;
-
-	int range = 0;
+	/// Max antal bomber af gangen.
+	public uint bombsMax = 1;
+	public uint bombsDown = 0;
+	/// Længden på flammer
+	public uint bombRange = 0;
 
 	void Start () {
-		tidGemt = Time.time + 1f;
 		sp = GetComponent<Spawner> ();
 		animator = GetComponent<Animator> ();
 	}
 
 	void Update () {
-		// Tid spillet har kørt.
-		float tid = Time.time;
-
-		// Bombe
-		if (tidGemt < tid) {
-			maxBomb = true;
-			tidGemt = tid;
-		} 
-
-		if (maxBomb) {
+		if (bombsDown < bombsMax) {
 			if (name.Equals ("Player1")) {
 				if (Input.GetKeyDown ("space")) {
 					animator.SetTrigger ("PutBomb");
@@ -44,9 +31,9 @@ public class hero : MonoBehaviour {
 					Vector3 placePos = transform.position;
 					placePos.x = (int)placePos.x + .5f;
 					placePos.y = (int)placePos.y + .5f;
-					sp.SpawnElement (placePos, new Vector3 (270, 0, 0), 0, range);
 
-					maxBomb = false;
+					sp.SpawnElement (gameObject, placePos, new Vector3 (270, 0, 0), 0, bombRange);
+					bombsDown++;
 				} else {
 					Debug.Log ("Der må smides bombe, men der er ikke trykket");
 				}
@@ -60,7 +47,6 @@ public class hero : MonoBehaviour {
 
 
 	void OnTriggerEnter (Collider other) {
-
 		string playerColli = other.name;
 		if (playerColli.Contains ("Speed-UpPickup")) {
 			DestroyObject (other.gameObject);
@@ -70,7 +56,7 @@ public class hero : MonoBehaviour {
 			mover.roamingTime -= 0.1f;
 		} else if (playerColli.Contains ("Fire-UpPickup")) {
 			DestroyObject (other.gameObject);
-			range++;
+			bombRange++;
 		} else if (playerColli.Contains ("Beam")) {
 			MovePlayer mover;
 			mover = GetComponent<MovePlayer> ();
@@ -82,7 +68,6 @@ public class hero : MonoBehaviour {
 			playerAni.SetBool ("Win", false);
 			playerAni.SetTrigger ("GameEnd");
 		}
-
 	}
 }
 // Lukker class

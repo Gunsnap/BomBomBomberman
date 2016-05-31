@@ -2,8 +2,13 @@ using UnityEngine;
 
 public class BombSplode : MonoBehaviour {
 	float putTime;
-	public float bombDelay;
-	public float range;
+	float bombDelay;
+
+	/// Længden på flammer
+	public uint range;
+
+	/// Hvem der har placeret mig
+	public GameObject placer;
 
 	void Start () {
 		putTime = Time.time;
@@ -14,6 +19,7 @@ public class BombSplode : MonoBehaviour {
 		if (Time.time > putTime + bombDelay) {
 			blastHallWithFire ();
 			DestroyObject (gameObject);
+			(placer.GetComponent<hero> () as hero).bombsDown--;
 		}
 	}
 
@@ -29,7 +35,7 @@ public class BombSplode : MonoBehaviour {
 		Vector3 venstreVecDec = new Vector3 (0, 270, 90);
 
 		//Center
-		sp.SpawnElement (bombPos, opVecDec);
+		sp.SpawnElement (gameObject, bombPos, opVecDec);
 
 		//Mid & End
 		bool up = true;
@@ -43,31 +49,32 @@ public class BombSplode : MonoBehaviour {
 			GameObject senesteFlamme;
 
 			if (up) {
-				senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (0, i, 0), opVecDec, element);
+				senesteFlamme = sp.SpawnElement (gameObject, bombPos + new Vector3 (0, i, 0), opVecDec, element);
 				char ramte = ForbiddenTilesVores.CheckSquare (senesteFlamme.transform.position + new Vector3 (0, 1, 0));
 				up = setFalseAndDestroy (senesteFlamme, ramte, up);
 			}
 
 			if (down) {
-				senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (0, -i, 0), nedVecDec, element);
+				senesteFlamme = sp.SpawnElement (gameObject, bombPos + new Vector3 (0, -i, 0), nedVecDec, element);
 				char ramte = ForbiddenTilesVores.CheckSquare (senesteFlamme.transform.position + new Vector3 (0, -1, 0));
 				down = setFalseAndDestroy (senesteFlamme, ramte, down);
 			}
 
 			if (right) {
-				senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (i, 0, 0), hoejreVecDec, element);
+				senesteFlamme = sp.SpawnElement (gameObject, bombPos + new Vector3 (i, 0, 0), hoejreVecDec, element);
 				char ramte = ForbiddenTilesVores.CheckSquare (senesteFlamme.transform.position + new Vector3 (1, 0, 0));
 				right = setFalseAndDestroy (senesteFlamme, ramte, right);
 			}
 
 			if (left) {
-				senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (-i, 0, 0), venstreVecDec, element);
+				senesteFlamme = sp.SpawnElement (gameObject, bombPos + new Vector3 (-i, 0, 0), venstreVecDec, element);
 				char ramte = ForbiddenTilesVores.CheckSquare (senesteFlamme.transform.position + new Vector3 (-1, 0, 0));
 				left = setFalseAndDestroy (senesteFlamme, ramte, left);
 			}
 		}
 	}
 
+	/** Ser på om man rammer noget og hvis det er noget der ikke kan fjernes forsvinder flammen. */
 	static bool setFalseAndDestroy (GameObject senesteFlamme, char ramte, bool retning) {
 		if (!ramte.Equals ('0')) {
 			retning = false;
