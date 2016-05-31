@@ -20,8 +20,12 @@ public class GameState : MonoBehaviour {
 		}
 
 		if (!running) {
-			Application.LoadLevel ("UIScoreOverview");
+			LoadNewScene ();
 			//FIXME SceneManager.LoadScene ("UIScoreOverview");
 		}
+	}
+
+	public void LoadNewScene () {
+		Application.LoadLevel ("UIScoreOverview");
 	}
 }
