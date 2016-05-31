@@ -18,7 +18,7 @@ public class hero : MonoBehaviour {
 	private bool AllowBomb = false;
 	//public float BombRate = 0.5f;
 	//private float nextBomb = 0.0f;
-	private int range = 0;
+	public int range = 0;
 
 	void Start () {
 		tidGemt = Time.time + 1f;

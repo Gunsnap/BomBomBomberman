@@ -7,4 +7,9 @@ public class BlockSquareVores : MonoBehaviour {
 		//Set the entry that corresonds to the obstacle's position as false
 		ForbiddenTilesVores.RegisterSquare (transform.position, false);
 	}
+
+	void OnCollisionEnter (Collision coli) {
+		//FIXME bliver ikke brugt
+		Debug.Log (coli.collider.name + " har Collision med " + name);
+	}
 }

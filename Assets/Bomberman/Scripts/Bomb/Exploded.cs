@@ -5,13 +5,10 @@ public class Exploded : MonoBehaviour {
 
 	float putTime;
 	float splosionDelay;
-	public Collider[] others;
 
 	void Start () {
 		putTime = Time.time;
 		splosionDelay = .3f;
-
-		others.Initialize ();
 	}
 
 	void Update () {
@@ -22,23 +19,11 @@ public class Exploded : MonoBehaviour {
 		}
 	}
 
-	/** FIXME bliver ikke kaldt! */
-	void OnCollisionEnter (Collision coll) {
-		Debug.Log ("COLLISION");
-		Collider[] tmpCols = others;
-		others = new Collider[others.Length + 1];
-		for (int i = 0; i < tmpCols.Length; i++) {
-			others [i] = tmpCols [i];
-		}
-		others [others.Length - 1] = coll.collider;
-		foreach (Collider col in others) {
-			Debug.Log (name + " ramte " + col.name);
-		}
-	}
-
 	void OnTriggerEnter (Collider other) {
 		if (other.name.Contains ("BrickBlock")) {
 			BombeRamt (other);
+		} else if (other.name.Contains ("SteelBlock")) {
+			Debug.Log ("Steel ramt");
 		} else {
 			Debug.Log ("Trigger på " + other.name);
 		}

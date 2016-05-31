@@ -11,12 +11,9 @@ public class BombSplode : MonoBehaviour {
 	}
 
 	void Update () {
-		float timeNow = Time.time;
-
-		//Når der er gået bombDelay sekunder sprænger bomben
-		if (timeNow > putTime + bombDelay) {
+		if (Time.time > putTime + bombDelay) {
 			blastHallWithFire ();
-			DestroyObject (this.gameObject);
+			DestroyObject (gameObject);
 		}
 	}
 
@@ -39,17 +36,14 @@ public class BombSplode : MonoBehaviour {
 			int element = i < range ? 1 : 2;
 			GameObject senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (0, i, 0), opVecDec, element);//Op
 			Debug.Log ("sp |> " + senesteFlamme);
-			Debug.Log ("sp.BoxCollider.Collider |> " + (Collider)(senesteFlamme.GetComponent<BoxCollider> ().GetComponent<Collider> ()));
-			Debug.Log ("sp.Exploded |> " + senesteFlamme.GetComponent<Exploded> ());
+			//Debug.Log ("sp.BoxCollider.Collider |> " + (Collider)(senesteFlamme.GetComponent<BoxCollider> ().GetComponent<Collider> ()));
+			//Debug.Log ("sp.Exploded |> " + senesteFlamme.GetComponent<Exploded> ());
 
 			senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (0, -i, 0), nedVecDec, element);//Ned
-			//Debug.Log ("Spawnede er " + senesteFlamme.GetComponent<BoxCollider> ());
 
 			senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (i, 0, 0), hoejreVecDec, element);//Højre
-			//Debug.Log ("Spawnede er " + senesteFlamme.GetComponent<BoxCollider> ());
 
 			senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (-i, 0, 0), venstreVecDec, element);//Venstre
-			//Debug.Log ("Spawnede er " + senesteFlamme.GetComponent<BoxCollider> ());
 		}
 	}
 
