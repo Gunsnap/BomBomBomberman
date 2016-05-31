@@ -5,19 +5,9 @@ public class BombSplode : MonoBehaviour {
 	public float bombDelay;
 	public float range;
 
-	bool up;
-	bool down;
-	bool left;
-	bool right;
-
 	void Start () {
 		putTime = Time.time;
 		bombDelay = 3.5f;
-
-		up = true;
-		down = true;
-		left = true;
-		right = true;
 	}
 
 	void Update () {
@@ -42,6 +32,11 @@ public class BombSplode : MonoBehaviour {
 		sp.SpawnElement (bombPos, opVecDec);
 
 		//Mid & End
+		bool up = true;
+		bool down = true;
+		bool left = true;
+		bool right = true;
+
 		for (float i = 0; i <= range; i++) {
 			int element = i < range ? 1 : 2;
 
@@ -49,34 +44,36 @@ public class BombSplode : MonoBehaviour {
 
 			if (up) {
 				senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (0, i, 0), opVecDec, element);
-				bool lovligt = ForbiddenTilesVores.CheckSquare (senesteFlamme.transform.position + new Vector3 (0, 1, 0));
-				if (!lovligt) {
-					up = false;
-					//DestroyObject (senesteFlamme);
-				}
+				char ramte = ForbiddenTilesVores.CheckSquare (senesteFlamme.transform.position + new Vector3 (0, 1, 0));
+				up = setFalseAndDestroy (senesteFlamme, ramte, up);
 			}
 
 			if (down) {
 				senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (0, -i, 0), nedVecDec, element);
-				bool lovligt = ForbiddenTilesVores.CheckSquare (senesteFlamme.transform.position + new Vector3 (0, -1, 0));
-				if (!lovligt)
-					down = false;
+				char ramte = ForbiddenTilesVores.CheckSquare (senesteFlamme.transform.position + new Vector3 (0, -1, 0));
+				down = setFalseAndDestroy (senesteFlamme, ramte, down);
 			}
 
 			if (right) {
 				senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (i, 0, 0), hoejreVecDec, element);
-				bool lovligt = ForbiddenTilesVores.CheckSquare (senesteFlamme.transform.position + new Vector3 (1, 0, 0));
-				if (!lovligt)
-					right = false;
+				char ramte = ForbiddenTilesVores.CheckSquare (senesteFlamme.transform.position + new Vector3 (1, 0, 0));
+				right = setFalseAndDestroy (senesteFlamme, ramte, right);
 			}
 
 			if (left) {
 				senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (-i, 0, 0), venstreVecDec, element);
-				bool lovligt = ForbiddenTilesVores.CheckSquare (senesteFlamme.transform.position + new Vector3 (-1, 0, 0));
-				if (!lovligt)
-					left = false;
+				char ramte = ForbiddenTilesVores.CheckSquare (senesteFlamme.transform.position + new Vector3 (-1, 0, 0));
+				left = setFalseAndDestroy (senesteFlamme, ramte, left);
 			}
 		}
 	}
 
+	static bool setFalseAndDestroy (GameObject senesteFlamme, char ramte, bool retning) {
+		if (!ramte.Equals ('0')) {
+			retning = false;
+			if (ramte.Equals ('x'))
+				DestroyObject (senesteFlamme);
+		}
+		return retning;
+	}
 }

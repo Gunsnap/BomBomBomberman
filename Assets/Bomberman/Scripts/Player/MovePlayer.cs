@@ -61,7 +61,7 @@ public class MovePlayer : MonoBehaviour {
 				//find the next destination
 				goal = FindNextFace ();
 				//--- let's check if the goal is allowed, if not we will pick another direction during the next frame ---
-				if (ForbiddenTilesVores.CheckSquare (goal)) {
+				if (ForbiddenTilesVores.CheckSquare (goal).Equals ('0')) {
 					//calculate speed by dividing distance (one of the two distances will be 0, we need the other one) through time
 					roamingSpeed = Mathf.Max (Mathf.Abs (transform.position.x - goal.x), Mathf.Abs (transform.position.y - goal.y)) / roamingTime;
 					//resume movement with the new goal

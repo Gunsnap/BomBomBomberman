@@ -15,7 +15,8 @@ public class hero : MonoBehaviour {
 
 	// Bomb
 	/// A bomb may be placed.
-	bool AllowBomb = false;
+	bool maxBomb = false;
+
 	int range = 0;
 
 	void Start () {
@@ -30,11 +31,11 @@ public class hero : MonoBehaviour {
 
 		// Bombe
 		if (tidGemt < tid) {
-			AllowBomb = true;
+			maxBomb = true;
 			tidGemt = tid;
 		} 
 
-		if (AllowBomb) {
+		if (maxBomb) {
 			if (name.Equals ("Player1")) {
 				if (Input.GetKeyDown ("space")) {
 					animator.SetTrigger ("PutBomb");
@@ -45,7 +46,7 @@ public class hero : MonoBehaviour {
 					placePos.y = (int)placePos.y + .5f;
 					sp.SpawnElement (placePos, new Vector3 (270, 0, 0), 0, range);
 
-					AllowBomb = false;
+					maxBomb = false;
 				} else {
 					Debug.Log ("Der må smides bombe, men der er ikke trykket");
 				}

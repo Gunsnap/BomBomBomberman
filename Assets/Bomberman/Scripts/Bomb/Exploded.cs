@@ -31,14 +31,14 @@ public class Exploded : MonoBehaviour {
 
 	static void BombeRamt (Collider other) {
 		//Spawn pickUp
-		if (Random.Range (0, 2) == 1) {
+		if (Random.Range (0, 3) == 1) {
 			Spawner sp = other.GetComponent<Spawner> ();
 			sp.SpawnElement (other.transform.position, new Vector3 (270, 0, 0), Random.Range (0, 2));
 		}
 
 		//Updater Grid
 		DestroyObject (other.gameObject);
-		ForbiddenTilesVores.RegisterSquare (other.transform.position, true);
+		ForbiddenTilesVores.RegisterSquare (other.transform.position, '0');
 	}
 
 }

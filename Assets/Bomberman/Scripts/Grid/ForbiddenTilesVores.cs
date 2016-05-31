@@ -41,7 +41,7 @@ be irrelevant
 public static class ForbiddenTilesVores {
 	/// <summary>Two-dimensional array of bool values.</summary>
 	/// `True` means the tile is legal to step on.
-	public static bool[,] allowedTiles;
+	public static char[,] allowedTiles;
 	/// <summary>The grid everything is based on.</summary>
 	public static GFRectGrid movementGrid;
 	/// <summary>The grid coordinates of the lower left square used for reference (X and Y only).</summary>
@@ -61,11 +61,11 @@ public static class ForbiddenTilesVores {
 		int[] size = SetMatrixSize ();
 						
 		//build a default matrix
-		allowedTiles = new bool[size [0], size [1]];
+		allowedTiles = new char[size [0], size [1]];
 		//set all entries to true
 		for (int i = 0; i < size [0]; i++) {
 			for (int j = 0; j < size [1]; j++) {
-				allowedTiles [i, j] = true;
+				allowedTiles [i, j] = '0';
 			}
 		}
 	}
@@ -100,7 +100,7 @@ public static class ForbiddenTilesVores {
 
 	/// <summary>Takes world coodinates, finds the corresponding square and sets that entry to either true or false.</summary>
 	/// Use it to disable or enable squares
-	public static void RegisterSquare (Vector3 vec, bool status) {
+	public static void RegisterSquare (Vector3 vec, char status) {
 		//first find the square that belongs to that world position
 		int[] square = GetSquare (vec);
 		//Debug.Log (vec + ": " + square [0] + "/" + square [1]);
@@ -110,7 +110,7 @@ public static class ForbiddenTilesVores {
 
 	/// <summary>takes world coodinates, finds the corresponding square and returns the value of that square.</summary>
 	/// Use it to cheack if a square is forbidden or not.
-	public static bool CheckSquare (Vector3 vec) {
+	public static char CheckSquare (Vector3 vec) {
 		int[] square = GetSquare (vec);
 		//Har tilføjet en if/else for at det ikke skulle lave fejl - DVS
 		if (square [0] != -1 && square [1] != -1 &&
@@ -118,7 +118,7 @@ public static class ForbiddenTilesVores {
 			return allowedTiles [square [0], square [1]];
 		} else {
 			//Debug.Log (vec + ": " + square [0] + "/" + square [1]);
-			return false;
+			return 'Ø';//var false - DVS
 		}
 	}
 
@@ -139,7 +139,7 @@ public static class ForbiddenTilesVores {
 		string text = "Occupied fields are 1, free fields are 0:\n\n";
 		for (int j = allowedTiles.GetLength (1) - 1; j >= 0; j--) {
 			for (int i = 0; i < allowedTiles.GetLength (0); i++) {
-				text = text + (allowedTiles [i, j] ? "0" : "1") + " ";
+				text = text + /*(*/allowedTiles [i, j]/*.Equals (0) ? "0" : "1")*/ + " ";
 			}
 			text += "\n";
 		}
