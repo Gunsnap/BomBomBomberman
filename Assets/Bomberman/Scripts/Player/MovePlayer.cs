@@ -81,31 +81,55 @@ public class MovePlayer : MonoBehaviour {
 		//we will be operating in grid space, so convert the position
 		Vector3 newPosition = grid.WorldToGrid (transform.localPosition);
 
+		//Add one grid unit onto position in the picked direction
+		BevaegeRetning (ref newPosition);
+
+		//return the position in world space
+		return grid.GridToWorld (newPosition);
+	}
+	// Lukker FindNextFace
+
+	void BevaegeRetning (ref Vector3 newPosition) {
+
 		//Retninger
 		Vector3 opVec = new Vector3 (270, 0, 0);
 		Vector3 nedVec = new Vector3 (90, 180, 0);
 		Vector3 hoejreVec = new Vector3 (0, 90, 270);
 		Vector3 venstreVec = new Vector3 (0, 270, 90);
 
-		//Add one grid unit onto position in the picked direction
-		if (Input.GetKey (KeyCode.W)) {
-			newPosition = newPosition + new Vector3 (0, 1, 0);
-			rotation = opVec;
-		} else if (Input.GetKey (KeyCode.S)) {
-			newPosition = newPosition + new Vector3 (0, -1, 0);
-			rotation = nedVec;
-		} else if (Input.GetKey (KeyCode.D)) {
-			newPosition = newPosition + new Vector3 (1, 0, 0);
-			rotation = hoejreVec;
-		} else if (Input.GetKey (KeyCode.A)) {
-			newPosition = newPosition + new Vector3 (-1, 0, 0);
-			rotation = venstreVec;
-		} else {
-			doMove = false;
+		if (name.Equals ("Player1")) {
+			if (Input.GetKey (KeyCode.W)) {
+				newPosition = newPosition + new Vector3 (0, 1, 0);
+				rotation = opVec;
+			} else if (Input.GetKey (KeyCode.S)) {
+				newPosition = newPosition + new Vector3 (0, -1, 0);
+				rotation = nedVec;
+			} else if (Input.GetKey (KeyCode.D)) {
+				newPosition = newPosition + new Vector3 (1, 0, 0);
+				rotation = hoejreVec;
+			} else if (Input.GetKey (KeyCode.A)) {
+				newPosition = newPosition + new Vector3 (-1, 0, 0);
+				rotation = venstreVec;
+			} else {
+				doMove = false;
+			}
+		} else if (name.Equals ("Player2")) {
+			GetComponent<RoamGridVores> ().enabled = false;
+			if (Input.GetKey (KeyCode.UpArrow)) {
+				newPosition = newPosition + new Vector3 (0, 1, 0);
+				rotation = opVec;
+			} else if (Input.GetKey (KeyCode.DownArrow)) {
+				newPosition = newPosition + new Vector3 (0, -1, 0);
+				rotation = nedVec;
+			} else if (Input.GetKey (KeyCode.RightArrow)) {
+				newPosition = newPosition + new Vector3 (1, 0, 0);
+				rotation = hoejreVec;
+			} else if (Input.GetKey (KeyCode.LeftArrow)) {
+				newPosition = newPosition + new Vector3 (-1, 0, 0);
+				rotation = venstreVec;
+			} else {
+				doMove = false;
+			}
 		}
-
-		//return the position in world space
-		return grid.GridToWorld (newPosition);
 	}
-	// Lukker FindNextFace
 }

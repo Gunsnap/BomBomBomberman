@@ -23,23 +23,24 @@ public class hero : MonoBehaviour {
 
 	void Update () {
 		if (bombsDown < bombsMax) {
-			if (name.Equals ("Player1")) {
-				if (Input.GetKeyDown ("space")) {
-					animator.SetTrigger ("PutBomb");
+			bool placerBombe = false;
+			if (name.Equals ("Player1") && Input.GetKeyDown (KeyCode.Space))
+				placerBombe = true;
+			else if (name.Equals ("Player2") && Input.GetKeyDown (KeyCode.Return))
+				placerBombe = true;
+			
 
-					// Placer bomben i grid
-					Vector3 placePos = transform.position;
-					placePos.x = (int)placePos.x + .5f;
-					placePos.y = (int)placePos.y + .5f;
+			if (placerBombe) {
+				animator.SetTrigger ("PutBomb");
 
-					sp.SpawnElement (gameObject, placePos, new Vector3 (270, 0, 0), 0, bombRange);
-					bombsDown++;
-				} else {
-					Debug.Log ("Der må smides bombe, men der er ikke trykket");
-				}
+				// Placer bomben i grid
+				Vector3 placePos = transform.position;
+				placePos.x = (int)placePos.x + .5f;
+				placePos.y = (int)placePos.y + .5f;
+
+				sp.SpawnElement (gameObject, placePos, new Vector3 (270, 0, 0), 0, bombRange);
+				bombsDown++;
 			}
-		} else {
-			Debug.Log ("Du må ikke smide en bombe");
 		}
 
 	}
