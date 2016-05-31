@@ -9,6 +9,8 @@ public class hero : MonoBehaviour {
 	/// Bruges til at animere spilleren
 	public Animator animator;
 
+	public int playerKills;
+
 	// Bomb
 	/// Max antal bomber af gangen.
 	public uint bombsMax = 1;
@@ -19,6 +21,8 @@ public class hero : MonoBehaviour {
 	void Start () {
 		sp = GetComponent<Spawner> ();
 		animator = GetComponent<Animator> ();
+
+		playerKills = 5;
 	}
 
 	void Update () {
@@ -40,6 +44,8 @@ public class hero : MonoBehaviour {
 
 				sp.SpawnElement (gameObject, placePos, new Vector3 (270, 0, 0), 0, bombRange);
 				bombsDown++;
+
+				saveData ();
 			}
 		}
 
@@ -69,6 +75,10 @@ public class hero : MonoBehaviour {
 			playerAni.SetBool ("Win", false);
 			playerAni.SetTrigger ("GameEnd");
 		}
+	}
+
+	public void saveData () {
+		GlobalControl.instance.playerKills = playerKills;
 	}
 }
 // Lukker class
