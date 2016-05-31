@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class UIloadNextAuto : MonoBehaviour {
 
-	IEnumerator Start() {
+	IEnumerator Start () {
 		yield return new WaitForSeconds (5f);
-		Application.LoadLevel ("Main");
+		SceneManager.LoadScene ("Level1");
 	}
 
 }
