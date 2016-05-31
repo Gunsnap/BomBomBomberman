@@ -22,7 +22,7 @@ public class hero : MonoBehaviour {
 		sp = GetComponent<Spawner> ();
 		animator = GetComponent<Animator> ();
 
-		playerKills = 5;
+		playerKills = 1;
 	}
 
 	void Update () {
@@ -44,8 +44,6 @@ public class hero : MonoBehaviour {
 
 				sp.SpawnElement (gameObject, placePos, new Vector3 (270, 0, 0), 0, bombRange);
 				bombsDown++;
-
-				saveData ();
 			}
 		}
 
@@ -65,6 +63,9 @@ public class hero : MonoBehaviour {
 			DestroyObject (other.gameObject);
 			bombRange++;
 		} else if (playerColli.Contains ("Beam")) {
+
+			saveData ();
+
 			MovePlayer mover;
 			mover = GetComponent<MovePlayer> ();
 			mover.doMove = false;
@@ -79,6 +80,9 @@ public class hero : MonoBehaviour {
 
 	public void saveData () {
 		GlobalControl.instance.playerKills = playerKills;
+
+		GameState gs = gameObject.GetComponentInParent <GameState> ();
+		gs.livingPlayers--;
 	}
 }
 // Lukker class

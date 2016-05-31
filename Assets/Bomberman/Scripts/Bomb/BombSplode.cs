@@ -13,6 +13,7 @@ public class BombSplode : MonoBehaviour {
 	void Start () {
 		putTime = Time.time;
 		bombDelay = 3.5f;
+		//FIXME (placer.GetComponent<hero> () as hero).farve til bomben
 	}
 
 	void Update () {
