@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class hero : MonoBehaviour {
+public class Hero : MonoBehaviour {
 	/// Bruges til at smide en bombe
 	private Spawner sp;
 
