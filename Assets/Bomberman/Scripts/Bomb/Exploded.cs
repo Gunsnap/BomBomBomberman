@@ -21,7 +21,15 @@ public class Exploded : MonoBehaviour {
 
 	void OnTriggerEnter (Collider other) {
 		if (other.name.Contains ("BrickBlock")) {
-			BombeRamt (other);
+			//Spawn pickUp
+			if (Random.Range (0, 3) == 1) {
+				Spawner sp = other.GetComponent<Spawner> ();
+				sp.SpawnElement (other.gameObject, other.transform.position, new Vector3 (270, 0, 0), Random.Range (0, 2));
+			}
+
+			//Updater Grid
+			DestroyObject (other.gameObject);
+			ForbiddenTilesVores.RegisterSquare (other.transform.position, '0');
 		} else if (other.name.Contains ("Player")) {
 			#region SaveData
 			//Opdater kills
@@ -48,17 +56,5 @@ public class Exploded : MonoBehaviour {
 		} else {
 			Debug.Log ("Trigger på " + other.name);
 		}
-	}
-
-	static void BombeRamt (Collider other) {
-		//Spawn pickUp
-		if (Random.Range (0, 3) == 1) {
-			Spawner sp = other.GetComponent<Spawner> ();
-			sp.SpawnElement (other.gameObject, other.transform.position, new Vector3 (270, 0, 0), Random.Range (0, 2));
-		}
-
-		//Updater Grid
-		DestroyObject (other.gameObject);
-		ForbiddenTilesVores.RegisterSquare (other.transform.position, '0');
 	}
 }

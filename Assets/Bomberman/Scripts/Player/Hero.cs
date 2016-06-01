@@ -59,20 +59,5 @@ public class Hero : MonoBehaviour {
 
 	}
 	// Lukker update
-
-	//FIXME smid PickUp over på Pickup
-	void OnTriggerEnter (Collider other) {
-		string playerColli = other.name;
-		if (playerColli.Contains ("Speed-UpPickup")) {
-			DestroyObject (other.gameObject);
-
-			MovePlayer mover;
-			mover = GetComponent<MovePlayer> ();
-			mover.roamingTime -= 0.1f;
-		} else if (playerColli.Contains ("Fire-UpPickup")) {
-			DestroyObject (other.gameObject);
-			bombRange++;
-		}
-	}
 }
 // Lukker class
