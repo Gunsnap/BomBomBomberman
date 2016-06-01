@@ -60,7 +60,7 @@ public class Hero : MonoBehaviour {
 	}
 	// Lukker update
 
-
+	//FIXME smid PickUp over på Pickup
 	void OnTriggerEnter (Collider other) {
 		string playerColli = other.name;
 		if (playerColli.Contains ("Speed-UpPickup")) {

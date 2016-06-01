@@ -16,7 +16,6 @@ public class Exploded : MonoBehaviour {
 		float timeNow = Time.time;
 		if (timeNow > putTime + splosionDelay) {
 			DestroyObject (this.gameObject);
-			Destroy (this);
 		}
 	}
 
@@ -25,13 +24,15 @@ public class Exploded : MonoBehaviour {
 			BombeRamt (other);
 		} else if (other.name.Contains ("Player")) {
 			#region SaveData
-			Hero otherHero = other.GetComponent<Hero> ();
+			//Opdater kills
 			if (!placer.name.Equals (other.name)) {
-				placer.GetComponent<Hero> ().playerKills++;
-				otherHero.playerKills--;
+				Hero placerHero = placer.GetComponent<Hero> ();
+				placerHero.playerKills++;
+				GlobalControl.instance.playerKills [placerHero.myGlobal] = placerHero.playerKills;
 			}
+			Hero otherHero = other.GetComponent<Hero> ();
+			otherHero.playerKills--;
 			GlobalControl.instance.playerKills [otherHero.myGlobal] = otherHero.playerKills;
-			GlobalControl.instance.playerKills [placer.GetComponent<Hero> ().myGlobal] = placer.GetComponent<Hero> ().playerKills;
 
 			other.gameObject.GetComponentInParent <GameState> ().livingPlayers--;
 			#endregion
@@ -59,10 +60,5 @@ public class Exploded : MonoBehaviour {
 		//Updater Grid
 		DestroyObject (other.gameObject);
 		ForbiddenTilesVores.RegisterSquare (other.transform.position, '0');
-	}
-
-
-	void OnCollisionEnter (Collision collis) {
-		Debug.Log ("Noget ramt i coll " + collis);
 	}
 }
