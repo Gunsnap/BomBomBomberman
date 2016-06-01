@@ -24,7 +24,7 @@ public class Exploded : MonoBehaviour {
 			//Spawn pickUp
 			if (Random.Range (0, 3) == 1) {
 				Spawner sp = other.GetComponent<Spawner> ();
-				sp.SpawnElement (other.gameObject, other.transform.position, new Vector3 (270, 0, 0), Random.Range (0, 2));
+				sp.SpawnElement (other.gameObject, other.transform.position, new Vector3 (270, 0, 0), Random.Range (0, 3));
 			}
 
 			//Updater Grid

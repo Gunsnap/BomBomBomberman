@@ -14,10 +14,12 @@ public class Hero : MonoBehaviour {
 
 	// Bomb
 	/// Max antal bomber af gangen.
-	public uint bombsMax = 1;
-	public uint bombsDown = 0;
+	public uint bombsMax;
+	public uint bombsDown;
 	/// Længden på flammer
-	public uint bombRange = 0;
+	public uint bombRange;
+	public float fuseTime;
+	public bool sickFuse;
 
 	void Start () {
 		sp = GetComponent<Spawner> ();
@@ -32,6 +34,9 @@ public class Hero : MonoBehaviour {
 		}
 		myGlobal = i;
 		GlobalControl.instance.playerKills [i] = playerKills;
+
+		sickFuse = false;
+		fuseTime = 3.5f;
 	}
 
 	void Update () {
@@ -52,8 +57,18 @@ public class Hero : MonoBehaviour {
 				placePos.x = (int)placePos.x + .5f;
 				placePos.y = (int)placePos.y + .5f;
 
-				sp.SpawnElement (gameObject, placePos, new Vector3 (270, 0, 0), 0, bombRange);
+				sp.SpawnElement (gameObject, placePos, new Vector3 (270, 0, 0), 0, bombRange, fuseTime);
 				bombsDown++;
+			}
+		}
+
+		Debug.Log (fuseTime);
+
+		if (sickFuse) {
+			float tidSyg = Time.time + 7f;
+			if (Time.time > tidSyg) {
+				sickFuse = false;
+				fuseTime = 3.5f;
 			}
 		}
 

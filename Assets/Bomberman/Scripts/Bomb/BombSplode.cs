@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BombSplode : MonoBehaviour {
 	float putTime;
-	float bombDelay;
+	public float bombDelay;
 
 	/// Længden på flammer
 	public uint range;
@@ -12,7 +12,6 @@ public class BombSplode : MonoBehaviour {
 
 	void Start () {
 		putTime = Time.time;
-		bombDelay = 3.5f;
 		//FIXME (placer.GetComponent<hero> () as hero).farve til bomben
 	}
 
