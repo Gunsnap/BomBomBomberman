@@ -5,6 +5,7 @@ public class Exploded : MonoBehaviour {
 
 	float putTime;
 	float splosionDelay;
+	public GameObject placer;
 
 	void Start () {
 		putTime = Time.time;
@@ -22,8 +23,27 @@ public class Exploded : MonoBehaviour {
 	void OnTriggerEnter (Collider other) {
 		if (other.name.Contains ("BrickBlock")) {
 			BombeRamt (other);
-		} else if (other.name.Contains ("SteelBlock")) {
-			Debug.Log ("Steel ramt");
+		} else if (other.name.Contains ("Player")) {
+			#region SaveData
+			Hero otherHero = other.GetComponent<Hero> ();
+			if (!placer.name.Equals (other.name)) {
+				placer.GetComponent<Hero> ().playerKills++;
+				otherHero.playerKills--;
+			}
+			GlobalControl.instance.playerKills [otherHero.myGlobal] = otherHero.playerKills;
+			GlobalControl.instance.playerKills [placer.GetComponent<Hero> ().myGlobal] = placer.GetComponent<Hero> ().playerKills;
+
+			other.gameObject.GetComponentInParent <GameState> ().livingPlayers--;
+			#endregion
+
+			MovePlayer mover = other.GetComponent<MovePlayer> ();
+			mover.doMove = false;
+			mover.allowMove = false;
+
+			Animator playerAni = other.GetComponent<Animator> ();
+			playerAni.SetBool ("Run", false);
+			playerAni.SetBool ("Win", false);
+			playerAni.SetTrigger ("GameEnd");
 		} else {
 			Debug.Log ("Trigger på " + other.name);
 		}

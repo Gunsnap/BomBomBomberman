@@ -4,7 +4,11 @@ using System.Collections;
 public class GlobalControl : MonoBehaviour {
 	public static GlobalControl instance;
 
-	public int playerKills;
+	public int[] playerKills;
+	public uint[] playerDistance;
+	public int[] roundNr;
+	public uint[] winner;
+	public uint[] powerUpNr;
 
 	void Awake () {
 		if (instance == null) {
