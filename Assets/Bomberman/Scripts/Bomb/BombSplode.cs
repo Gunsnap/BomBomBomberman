@@ -20,7 +20,7 @@ public class BombSplode : MonoBehaviour {
 		if (Time.time > putTime + bombDelay) {
 			blastHallWithFire ();
 			DestroyObject (gameObject);
-			(placer.GetComponent<hero> () as hero).bombsDown--;
+			(placer.GetComponent<Hero> () as Hero).bombsDown--;
 		}
 	}
 

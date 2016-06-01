@@ -41,4 +41,8 @@ public class Exploded : MonoBehaviour {
 		ForbiddenTilesVores.RegisterSquare (other.transform.position, '0');
 	}
 
+
+	void OnCollisionEnter (Collision collis) {
+		Debug.Log ("Noget ramt i coll " + collis);
+	}
 }
