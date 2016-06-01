@@ -9,6 +9,7 @@ public class Hero : MonoBehaviour {
 	/// Bruges til at animere spilleren
 	public Animator animator;
 
+	public int myGlobal;
 	public int playerKills;
 
 	// Bomb
@@ -22,12 +23,21 @@ public class Hero : MonoBehaviour {
 		sp = GetComponent<Spawner> ();
 		animator = GetComponent<Animator> ();
 
-		playerKills = 1;
+		int[] tmpInt = GlobalControl.instance.playerKills;
+		GlobalControl.instance.playerKills = new int[tmpInt.Length + 1];
+
+		int i = 0;
+		for (; i < tmpInt.Length; i++) {
+			GlobalControl.instance.playerKills [i] = tmpInt [i];
+		}
+		myGlobal = i;
+		GlobalControl.instance.playerKills [i] = playerKills;
 	}
 
 	void Update () {
 		if (bombsDown < bombsMax) {
 			bool placerBombe = false;
+
 			if (name.Equals ("Player1") && Input.GetKeyDown (KeyCode.Space))
 				placerBombe = true;
 			else if (name.Equals ("Player2") && Input.GetKeyDown (KeyCode.Return))
@@ -62,27 +72,7 @@ public class Hero : MonoBehaviour {
 		} else if (playerColli.Contains ("Fire-UpPickup")) {
 			DestroyObject (other.gameObject);
 			bombRange++;
-		} else if (playerColli.Contains ("Beam")) {
-
-			saveData ();
-
-			MovePlayer mover;
-			mover = GetComponent<MovePlayer> ();
-			mover.doMove = false;
-			mover.allowMove = false;
-
-			Animator playerAni = GetComponent<Animator> ();
-			playerAni.SetBool ("Run", false);
-			playerAni.SetBool ("Win", false);
-			playerAni.SetTrigger ("GameEnd");
 		}
-	}
-
-	public void saveData () {
-		GlobalControl.instance.playerKills = playerKills;
-
-		GameState gs = gameObject.GetComponentInParent <GameState> ();
-		gs.livingPlayers--;
 	}
 }
 // Lukker class
