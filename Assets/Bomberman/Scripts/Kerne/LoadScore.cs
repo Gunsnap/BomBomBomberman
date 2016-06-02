@@ -5,7 +5,7 @@ public class LoadData : MonoBehaviour {
 
 	public int[] playerKills;
 	public uint[] playerDistance;
-	public int[] roundNr;
+	public uint[] roundNr;
 	public uint[] winner;
 	public uint[] powerUpNr;
 
@@ -16,8 +16,13 @@ public class LoadData : MonoBehaviour {
 		winner = GlobalControl.instance.winner;
 		powerUpNr = GlobalControl.instance.powerUpNr;
 
-		foreach (var item in playerKills) {
-			Debug.Log (item);
+		Debug.Log ("Runde " + roundNr);
+		Debug.Log ("Vinder: " + winner);
+		for (int i = 0; i < playerKills.Length; i++) {
+			Debug.Log ("Player " + i);
+			Debug.Log ("playerKills " + playerKills [i]);
+			Debug.Log ("playerDistance " + playerDistance [i]);
+			Debug.Log ("powerUpNr " + powerUpNr [i]);
 		}
 	}
 }

@@ -6,7 +6,7 @@ public class GlobalControl : MonoBehaviour {
 
 	public int[] playerKills;
 	public uint[] playerDistance;
-	public int[] roundNr;
+	public uint[] roundNr;
 	public uint[] winner;
 	public uint[] powerUpNr;
 

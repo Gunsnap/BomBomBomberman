@@ -62,8 +62,6 @@ public class Hero : MonoBehaviour {
 			}
 		}
 
-		Debug.Log (fuseTime);
-
 		if (sickFuse) {
 			float tidSyg = Time.time + 7f;
 			if (Time.time > tidSyg) {
