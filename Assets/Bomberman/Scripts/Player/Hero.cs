@@ -10,7 +10,8 @@ public class Hero : MonoBehaviour {
 	public Animator animator;
 
 	public int myGlobal;
-	public int playerKills;
+	public int kills;
+	public uint distance;
 
 	// Bomb
 	/// Max antal bomber af gangen.
@@ -21,19 +22,39 @@ public class Hero : MonoBehaviour {
 	public float fuseTime;
 	public bool sickFuse;
 
+	void Awake () {
+		GetComponentInParent<GameState> ().livingPlayers++;
+
+		GlobalControl gc = GetComponentInParent<GlobalControl> ();
+
+		/*for (int n = 0; n < gc.playerName.Length; n++) {
+			if (name.Equals (gc.playerName [n])) {
+				myGlobal = n + 1;
+				break;
+			} else {
+				myGlobal = gc.playerDistance.Length;
+			}
+		}*/
+
+		/*string[] tmpPlayerName = gc.playerName;
+		string[] tmpPlayerNick = gc.playerNick;
+		int[] tmpPlayerKills = gc.playerKills;
+		uint[] tmpPlayerDistance = gc.playerDistance;
+		uint[] tmpPowerUpCount = gc.powerUpCount;*/
+
+		/*if (myGlobal == 0)
+			for (int i = 0; i < tmpPlayerKills.Length; i++) {
+				gc.playerKills [i] = tmpPlayerKills [i];
+				gc.playerDistance [i] = tmpPlayerDistance [i];
+			}*/
+
+		/*kills = gc.playerKills [myGlobal];
+		distance = gc.playerDistance [myGlobal];*/
+	}
+
 	void Start () {
 		sp = GetComponent<Spawner> ();
 		animator = GetComponent<Animator> ();
-
-		int[] tmpInt = GlobalControl.instance.playerKills;
-		GlobalControl.instance.playerKills = new int[tmpInt.Length + 1];
-
-		int i = 0;
-		for (; i < tmpInt.Length; i++) {
-			GlobalControl.instance.playerKills [i] = tmpInt [i];
-		}
-		myGlobal = i;
-		GlobalControl.instance.playerKills [i] = playerKills;
 
 		sickFuse = false;
 		fuseTime = 3.5f;

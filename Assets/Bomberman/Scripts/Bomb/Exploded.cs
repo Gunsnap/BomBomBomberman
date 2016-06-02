@@ -35,12 +35,12 @@ public class Exploded : MonoBehaviour {
 			//Opdater kills
 			if (!placer.name.Equals (other.name)) {
 				Hero placerHero = placer.GetComponent<Hero> ();
-				placerHero.playerKills++;
-				GlobalControl.instance.playerKills [placerHero.myGlobal] = placerHero.playerKills;
+				placerHero.kills++;
+				GlobalControl.instance.playerKills [placerHero.myGlobal] = placerHero.kills;
 			}
 			Hero otherHero = other.GetComponent<Hero> ();
-			otherHero.playerKills--;
-			GlobalControl.instance.playerKills [otherHero.myGlobal] = otherHero.playerKills;
+			otherHero.kills--;
+			GlobalControl.instance.playerKills [otherHero.myGlobal] = otherHero.kills;
 
 			other.gameObject.GetComponentInParent <GameState> ().livingPlayers--;
 			#endregion

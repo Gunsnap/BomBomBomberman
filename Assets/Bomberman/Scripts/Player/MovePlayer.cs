@@ -45,14 +45,17 @@ public class MovePlayer : MonoBehaviour {
 				newPosition.x = Mathf.MoveTowards (transform.position.x, goal.x, roamingSpeed * Time.deltaTime);
 				newPosition.y = Mathf.MoveTowards (transform.position.y, goal.y, roamingSpeed * Time.deltaTime);
 				transform.position = newPosition;
+
 				//check if we reached the destination (use a certain tolerance so we don't miss the point becase of rounding errors)
 				if (Mathf.Abs (transform.position.x - goal.x) < 0.01f && Mathf.Abs (transform.position.y - goal.y) < 0.01f) {
 					doMove = false;
+				} else {
+					GetComponent<Hero> ().distance++;
 				}
 				//if we did stop moving
 
 				// Set animation og rotation så det passer med bevægelsen
-				animator.SetBool ("Run", doMove ? true : false);
+				animator.SetBool ("Run", doMove);
 				transform.rotation = Quaternion.Euler (rotation);
 			} else {
 				//make sure the time is always positive
