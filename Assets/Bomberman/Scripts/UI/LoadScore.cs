@@ -27,7 +27,7 @@ public class LoadScore : MonoBehaviour {
 		powerUpCount = GlobalControl.instance.powerUpCount;
 
 		Debug.Log ("Runde " + roundNr + " af " + roundTotal);
-		Debug.Log ("Vinder denne runde: " + winner [roundNr - 1]);
+		//Debug.Log ("Vinder denne runde: " + winner [roundNr - 1]);
 
 		for (int i = 0; i < playerKills.Length; i++) {
 			Debug.Log ("Player " + i);

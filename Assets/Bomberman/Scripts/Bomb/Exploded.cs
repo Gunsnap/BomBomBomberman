@@ -32,15 +32,16 @@ public class Exploded : MonoBehaviour {
 			ForbiddenTilesVores.RegisterSquare (other.transform.position, '0');
 		} else if (other.name.Contains ("Player")) {
 			#region SaveData
+			GlobalControl gc = GlobalControl.instance;
 			//Opdater kills
 			if (!placer.name.Equals (other.name)) {
 				Hero placerHero = placer.GetComponent<Hero> ();
-				placerHero.kills++;
-				GlobalControl.instance.playerKills [placerHero.myGlobal] = placerHero.kills;
+				placerHero.myKills++;
+				gc.playerKills [placerHero.myGlobalID] = placerHero.myKills;
 			}
 			Hero otherHero = other.GetComponent<Hero> ();
-			otherHero.kills--;
-			GlobalControl.instance.playerKills [otherHero.myGlobal] = otherHero.kills;
+			otherHero.myKills--;
+			gc.playerKills [otherHero.myGlobalID] = otherHero.myKills;
 
 			other.gameObject.GetComponentInParent <GameState> ().livingPlayers--;
 			#endregion

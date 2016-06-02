@@ -50,7 +50,7 @@ public class MovePlayer : MonoBehaviour {
 				if (Mathf.Abs (transform.position.x - goal.x) < 0.01f && Mathf.Abs (transform.position.y - goal.y) < 0.01f) {
 					doMove = false;
 				} else {
-					GetComponent<Hero> ().distance++;
+					GetComponent<Hero> ().myDistance++;
 				}
 				//if we did stop moving
 

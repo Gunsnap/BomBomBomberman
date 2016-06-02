@@ -9,9 +9,13 @@ public class Hero : MonoBehaviour {
 	/// Bruges til at animere spilleren
 	public Animator animator;
 
-	public int myGlobal;
-	public int kills;
-	public uint distance;
+	// GlobalControl
+	public int myGlobalID;
+	public string myName;
+	public string myNick;
+	public int myKills;
+	public uint myDistance;
+	public uint myPowerUpCount;
 
 	// Bomb
 	/// Max antal bomber af gangen.
@@ -22,37 +26,63 @@ public class Hero : MonoBehaviour {
 	public float fuseTime;
 	public bool sickFuse;
 
-	void Awake () {
+	void Start () {
+		#region Global
+
 		GetComponentInParent<GameState> ().livingPlayers++;
 
-		GlobalControl gc = GetComponentInParent<GlobalControl> ();
+		var gc = GlobalControl.instance;
 
-		/*for (int n = 0; n < gc.playerName.Length; n++) {
+		// Finder ud af om jeg findes i gc
+		for (int n = 0; n < gc.playerName.Length; n++) {
 			if (name.Equals (gc.playerName [n])) {
-				myGlobal = n + 1;
+				myGlobalID = n;
 				break;
 			} else {
-				myGlobal = gc.playerDistance.Length;
+				myGlobalID = gc.playerName.Length;
 			}
-		}*/
+		}
 
-		/*string[] tmpPlayerName = gc.playerName;
-		string[] tmpPlayerNick = gc.playerNick;
-		int[] tmpPlayerKills = gc.playerKills;
-		uint[] tmpPlayerDistance = gc.playerDistance;
-		uint[] tmpPowerUpCount = gc.powerUpCount;*/
+		// Hvis jeg ikke findes så forlænges gc med en ny
+		if (myGlobalID == gc.playerName.Length) {
+			string[] tmpPlayerName = gc.playerName;
+			string[] tmpPlayerNick = gc.playerNick;
+			int[] tmpPlayerKills = gc.playerKills;
+			uint[] tmpPlayerDistance = gc.playerDistance;
+			uint[] tmpPlayerPowerUpCount = gc.powerUpCount;
 
-		/*if (myGlobal == 0)
-			for (int i = 0; i < tmpPlayerKills.Length; i++) {
+			int nyLength = tmpPlayerName.Length + 1;
+			gc.playerName = new string[nyLength];
+			gc.playerNick = new string[nyLength];
+			gc.playerKills = new int[nyLength];
+			gc.playerDistance = new uint[nyLength];
+			gc.powerUpCount = new uint[nyLength];
+
+			int i = 0;
+			for (; i < nyLength - 1; i++) {
+				gc.playerName [i] = tmpPlayerName [i];
+				gc.playerNick [i] = tmpPlayerNick [i];
 				gc.playerKills [i] = tmpPlayerKills [i];
 				gc.playerDistance [i] = tmpPlayerDistance [i];
-			}*/
+				gc.powerUpCount [i] = tmpPlayerPowerUpCount [i];
+			}
 
-		/*kills = gc.playerKills [myGlobal];
-		distance = gc.playerDistance [myGlobal];*/
-	}
+			gc.playerName [i] = name;
+			gc.playerNick [i] = "Unknown Warrior";
+			gc.playerKills [i] = 0;
+			gc.playerDistance [i] = 0;
+			gc.powerUpCount [i] = 0;
+		}
 
-	void Start () {
+		// Gemmer tidligere stats fra gc
+		myName = gc.playerName [myGlobalID];
+		myNick = gc.playerNick [myGlobalID];
+		myKills = gc.playerKills [myGlobalID];
+		myDistance = gc.playerDistance [myGlobalID];
+		myPowerUpCount = gc.powerUpCount [myGlobalID];
+
+		#endregion Global
+
 		sp = GetComponent<Spawner> ();
 		animator = GetComponent<Animator> ();
 
