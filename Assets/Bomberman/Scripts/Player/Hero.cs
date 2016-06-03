@@ -34,24 +34,28 @@ public class Hero : MonoBehaviour {
 		var gc = GlobalControl.instance;
 
 		// Finder ud af om jeg findes i gc
-		for (int n = 0; n < gc.playerName.Length; n++) {
-			if (name.Equals (gc.playerName [n])) {
-				myGlobalID = n;
-				break;
-			} else {
-				myGlobalID = gc.playerName.Length;
+		if (gc.playerName != null)
+			for (int n = 0; n < gc.playerName.Length; n++) {
+				if (name.Equals (gc.playerName [n])) {
+					myGlobalID = n;
+					break;
+				} else {
+					myGlobalID = gc.playerName.Length;
+				}
 			}
+		else {
+			myGlobalID = 0;
 		}
 
 		// Hvis jeg ikke findes så forlænges gc med en ny
-		if (myGlobalID == gc.playerName.Length) {
+		if (myGlobalID == gc.playerKills.Length) {
 			string[] tmpPlayerName = gc.playerName;
 			string[] tmpPlayerNick = gc.playerNick;
 			int[] tmpPlayerKills = gc.playerKills;
 			uint[] tmpPlayerDistance = gc.playerDistance;
 			uint[] tmpPlayerPowerUpCount = gc.powerUpCount;
 
-			int nyLength = tmpPlayerName.Length + 1;
+			int nyLength = tmpPlayerKills.Length + 1;
 			gc.playerName = new string[nyLength];
 			gc.playerNick = new string[nyLength];
 			gc.playerKills = new int[nyLength];
@@ -68,7 +72,7 @@ public class Hero : MonoBehaviour {
 			}
 
 			gc.playerName [i] = name;
-			gc.playerNick [i] = "Unknown Warrior";
+			gc.playerNick [i] = name + "Nick";
 			gc.playerKills [i] = 0;
 			gc.playerDistance [i] = 0;
 			gc.powerUpCount [i] = 0;
