@@ -9,7 +9,7 @@ public class Exploded : MonoBehaviour {
 
 	void Start () {
 		putTime = Time.time;
-		splosionDelay = .3f;
+		splosionDelay = .5f;
 	}
 
 	void Update () {
