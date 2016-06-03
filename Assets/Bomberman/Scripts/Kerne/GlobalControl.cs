@@ -7,6 +7,8 @@ public class GlobalControl : MonoBehaviour {
 	public uint roundNr;
 	public uint roundTotal;
 
+	public string baneID;
+
 	public uint[] winner;
 
 	public string[] playerName;

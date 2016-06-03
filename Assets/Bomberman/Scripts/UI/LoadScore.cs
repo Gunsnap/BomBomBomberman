@@ -26,15 +26,15 @@ public class LoadScore : MonoBehaviour {
 		playerDistance = GlobalControl.instance.playerDistance;
 		powerUpCount = GlobalControl.instance.powerUpCount;
 
-		Debug.Log ("Runde " + roundNr + " af " + roundTotal);
-		//Debug.Log ("Vinder denne runde: " + winner [roundNr - 1]);
-
-		for (int i = 0; i < playerKills.Length; i++) {
-			Debug.Log ("Player " + i);
-			Debug.Log ("playerKills " + playerKills [i]);
-			Debug.Log ("playerDistance " + playerDistance [i]);
-			Debug.Log ("powerUpNr " + powerUpCount [i]);
-		}
+//		Debug.Log ("Runde " + roundNr + " af " + roundTotal);
+//		//Debug.Log ("Vinder denne runde: " + winner [roundNr - 1]);
+//
+//		for (int i = 0; i < playerKills.Length; i++) {
+//			Debug.Log ("Player " + i);
+//			Debug.Log ("playerKills " + playerKills [i]);
+//			Debug.Log ("playerDistance " + playerDistance [i]);
+//			Debug.Log ("powerUpNr " + powerUpCount [i]);
+//		}
 
 
 	}
