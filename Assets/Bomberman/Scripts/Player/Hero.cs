@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections;
-using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Hero : MonoBehaviour {
 	/// Bruges til at smide en bombe
@@ -29,10 +30,15 @@ public class Hero : MonoBehaviour {
 	void Start () {
 		#region Global
 
-		GetComponentInParent<GameState> ().livingPlayers++;
+		GameState gs;
+		if (SceneManager.GetActiveScene ().name.Equals ("Level1")) {
+			gs = GetComponentInParent<GameState> ();
+		} else {
+			gs = GameObject.Find ("GameGrid").GetComponent<GameState> ();
+		}
+		gs.livingPlayers++;
 
 		var gc = GlobalControl.instance;
-
 		// Finder ud af om jeg findes i gc
 		if (gc.playerName != null)
 			for (int n = 0; n < gc.playerName.Length; n++) {
