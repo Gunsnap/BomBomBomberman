@@ -104,7 +104,7 @@ public class Hero : MonoBehaviour {
 		if (bombsDown < bombsMax) {
 			bool placerBombe = false;
 
-			if (name.Equals ("Player1") && Input.GetKeyDown (KeyCode.Space))
+			if (name.Equals ("Player1") && Input.GetKeyDown (KeyCode.LeftShift))
 				placerBombe = true;
 			else if (name.Equals ("Player2") && Input.GetKeyDown (KeyCode.Return))
 				placerBombe = true;
@@ -118,7 +118,11 @@ public class Hero : MonoBehaviour {
 				placePos.x = (int)placePos.x + .5f;
 				placePos.y = (int)placePos.y + .5f;
 
-				sp.SpawnElement (gameObject, placePos, new Vector3 (270, 0, 0), 0, bombRange, fuseTime);
+				GameObject TNT = sp.SpawnElement (gameObject, placePos, new Vector3 (270, 0, 0), 0, bombRange, fuseTime);
+				BombSplode bombe = TNT.gameObject.GetComponent<BombSplode> ();
+				bombe.bombDelay = fuseTime;
+				bombe.range = bombRange;
+				bombe.placer = gameObject;
 				bombsDown++;
 			}
 		}

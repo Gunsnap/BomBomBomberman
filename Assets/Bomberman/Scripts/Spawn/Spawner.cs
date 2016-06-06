@@ -12,11 +12,8 @@ public class Spawner : MonoBehaviour {
 	public GameObject SpawnElement (GameObject placer, Vector3 SpawnPos, Vector3 rot, int element = 0, uint range = 0, float fuseTime = 5) {
 		if (whatToSpawnPrefab [element].name.Contains ("TNT")) {
 			whatToSpawnClone [element] = (GameObject)Instantiate (whatToSpawnPrefab [element], SpawnPos, Quaternion.Euler (rot));
-			BombSplode bombe = whatToSpawnClone [element].gameObject.GetComponent<BombSplode> ();
-			bombe.range = range;
-			bombe.placer = placer;
-			bombe.bombDelay = fuseTime;
 		} else if (whatToSpawnPrefab [element].name.Contains ("Sickness")) {
+			whatToSpawnClone [element] = (GameObject)Instantiate (whatToSpawnPrefab [element], SpawnPos, Quaternion.Euler (rot));
 			int sygdom = Random.Range (0, 4);
 			SicknessSpawn (placer, SpawnPos, rot, element, sygdom, fuseTime);
 		} else {
@@ -27,7 +24,6 @@ public class Spawner : MonoBehaviour {
 	}
 
 	void SicknessSpawn (GameObject placer, Vector3 SpawnPos, Vector3 rot, int element, int sygdom, float fuseTime) {
-		whatToSpawnClone [element] = (GameObject)Instantiate (whatToSpawnPrefab [element], SpawnPos, Quaternion.Euler (rot));
 		switch (sygdom) {
 		case 0:
 			whatToSpawnClone [element].name = "Fire-DownPickup";
