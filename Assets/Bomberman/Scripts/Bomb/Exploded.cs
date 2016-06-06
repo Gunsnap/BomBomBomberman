@@ -1,30 +1,35 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Exploded : MonoBehaviour {
-
-	float putTime;
+	/// Tid der går inden flammen skal forsvinde.
 	float splosionDelay;
+
+	/// Spilleren der har placeret bomben
 	public GameObject placer;
 
 	void Start () {
-		putTime = Time.time;
-		splosionDelay = .5f;
+		splosionDelay = .5f + Time.time;
 	}
 
+	/// Når tiden er gået fjernes flammen
 	void Update () {
-		float timeNow = Time.time;
-		if (timeNow > putTime + splosionDelay) {
+		if (Time.time > splosionDelay)
 			DestroyObject (this.gameObject);
-		}
 	}
 
+	/** Kigger på hvad flammen rammer. */
 	void OnTriggerEnter (Collider other) {
 		if (other.name.Contains ("BrickBlock")) {
-			//Spawn pickUp
+			//Spawn pickUp, 1 ud af 3 gange.
 			if (Random.Range (0, 3) == 1) {
-				Spawner sp = other.GetComponent<Spawner> ();
-				sp.SpawnElement (other.gameObject, other.transform.position, new Vector3 (270, 0, 0), Random.Range (0, 3));
+				GameObject pickup = other.GetComponent<Spawner> ().SpawnElement (
+					                    other.gameObject, other.transform.position, new Vector3 (270, 0, 0), Random.Range (0, 3));
+
+				// Hvis det er en sygdom ændrer vi navnet så det kan bruges.
+				if (pickup.name.Contains ("Sickness"))
+					SicknessSpawn (pickup);
 			}
 
 			//Updater Grid
@@ -33,29 +38,57 @@ public class Exploded : MonoBehaviour {
 		} else if (other.name.Contains ("Player")) {
 			#region SaveData
 			GlobalControl gc = GlobalControl.instance;
-			//Opdater kills
+
+			// Opdater kills for den ramte spiller.
+			Hero hitHero = other.GetComponent<Hero> ();
+			hitHero.myKills--;
+			gc.playerKills [hitHero.myGlobalID] = hitHero.myKills;
+
+			// Hvis det ikke er selvmord, så opdateres kills for spilleren der har placeret bomben.
 			if (!placer.name.Equals (other.name)) {
 				Hero placerHero = placer.GetComponent<Hero> ();
 				placerHero.myKills++;
 				gc.playerKills [placerHero.myGlobalID] = placerHero.myKills;
 			}
-			Hero otherHero = other.GetComponent<Hero> ();
-			otherHero.myKills--;
-			gc.playerKills [otherHero.myGlobalID] = otherHero.myKills;
 
-			other.gameObject.GetComponentInParent <GameState> ().livingPlayers--;
+			// Fortæller GameState at der er én mindre spiller i live.
+			GameState gs;
+			if (SceneManager.GetActiveScene ().name.Equals ("Level1"))
+				gs = other.gameObject.GetComponentInParent <GameState> ();
+			else
+				gs = GameObject.Find ("GameGrid").GetComponent<GameState> ();
+			gs.livingPlayers--;
 			#endregion
 
+			// Stopper den ramte spiller, så denne ikke længere kan bevæge sig.
 			MovePlayer mover = other.GetComponent<MovePlayer> ();
 			mover.doMove = false;
 			mover.allowMove = false;
 
+			// Sætter den ramte spillers animation til at denne har tabt.
 			Animator playerAni = other.GetComponent<Animator> ();
 			playerAni.SetBool ("Run", false);
 			playerAni.SetBool ("Win", false);
 			playerAni.SetTrigger ("GameEnd");
-		} else {
-			Debug.Log ("Trigger på " + other.name);
 		}
 	}
+
+	/** Laver sygdommen om til en specifik sygdom. Bruges i 'PickUp.cs' */
+	void SicknessSpawn (GameObject obj) {
+		switch (Random.Range (0, 4)) {
+		case 0:
+			obj.name = "Fire-DownPickup";
+			break;
+		case 1:
+			obj.name = "Speed-DownPickup";
+			break;
+		case 2:
+			obj.name = "ReversePickup";
+			break;
+		case 3:
+			obj.name = "PoopPickup";
+			break;
+		}
+	}
+
 }

@@ -29,7 +29,6 @@ public class Hero : MonoBehaviour {
 
 	void Start () {
 		#region Global
-
 		GameState gs;
 		if (SceneManager.GetActiveScene ().name.Equals ("Level1")) {
 			gs = GetComponentInParent<GameState> ();
@@ -118,7 +117,7 @@ public class Hero : MonoBehaviour {
 				placePos.x = (int)placePos.x + .5f;
 				placePos.y = (int)placePos.y + .5f;
 
-				GameObject TNT = sp.SpawnElement (gameObject, placePos, new Vector3 (270, 0, 0), 0, bombRange, fuseTime);
+				GameObject TNT = sp.SpawnElement (gameObject, placePos, new Vector3 (270, 0, 0));
 				BombSplode bombe = TNT.gameObject.GetComponent<BombSplode> ();
 				bombe.bombDelay = fuseTime;
 				bombe.range = bombRange;
