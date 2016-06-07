@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
 // Link til hjælp: www.youtube.com/watch?v=M_xXmpI0GYs
 
 public class Spawner : MonoBehaviour {

@@ -23,29 +23,31 @@ public class BombSplode : MonoBehaviour {
 		}
 	}
 
-	//Flammer spawnes
+	/** Flammer spawnes */
 	public void blastHallWithFire () {
 		Spawner sp = gameObject.GetComponent<Spawner> ();
 		Vector3 bombPos = transform.position;
 		GameObject senesteFlamme;
 
-		//Retninger
+		// Retninger
 		Vector3 opVecDec = new Vector3 (270, 0, 0);
 		Vector3 nedVecDec = new Vector3 (90, 180, 0);
 		Vector3 hoejreVecDec = new Vector3 (0, 90, 270);
 		Vector3 venstreVecDec = new Vector3 (0, 270, 90);
 
-		//Center
+		// Center
 		senesteFlamme = sp.SpawnElement (gameObject, bombPos, opVecDec);
 		senesteFlamme.GetComponent<Exploded> ().placer = placer;
 
-		//Mid & End
+		// Mid & End
 		bool up = true;
 		bool down = true;
 		bool left = true;
 		bool right = true;
 
 		for (float i = 0; i <= range; i++) {
+			/* Hvis enden er nået sættes element til at være flammeEnd
+			 * ellers sættes den til at være flammeMid */
 			int element = i < range ? 1 : 2;
 
 			if (up) {

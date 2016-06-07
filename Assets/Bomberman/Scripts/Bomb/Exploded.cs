@@ -36,29 +36,7 @@ public class Exploded : MonoBehaviour {
 			DestroyObject (other.gameObject);
 			ForbiddenTilesVores.RegisterSquare (other.transform.position, '0');
 		} else if (other.name.Contains ("Player")) {
-			#region SaveData
-			GlobalControl gc = GlobalControl.instance;
-
-			// Opdater kills for den ramte spiller.
-			Hero hitHero = other.GetComponent<Hero> ();
-			hitHero.myKills--;
-			gc.playerKills [hitHero.myGlobalID] = hitHero.myKills;
-
-			// Hvis det ikke er selvmord, så opdateres kills for spilleren der har placeret bomben.
-			if (!placer.name.Equals (other.name)) {
-				Hero placerHero = placer.GetComponent<Hero> ();
-				placerHero.myKills++;
-				gc.playerKills [placerHero.myGlobalID] = placerHero.myKills;
-			}
-
-			// Fortæller GameState at der er én mindre spiller i live.
-			GameState gs;
-			if (SceneManager.GetActiveScene ().name.Equals ("Level1"))
-				gs = other.gameObject.GetComponentInParent <GameState> ();
-			else
-				gs = GameObject.Find ("GameGrid").GetComponent<GameState> ();
-			gs.livingPlayers--;
-			#endregion
+			SaveData (other);
 
 			// Stopper den ramte spiller, så denne ikke længere kan bevæge sig.
 			MovePlayer mover = other.GetComponent<MovePlayer> ();
@@ -73,7 +51,7 @@ public class Exploded : MonoBehaviour {
 		}
 	}
 
-	/** Laver sygdommen om til en specifik sygdom. Bruges i 'PickUp.cs' */
+	/** Laver sygdommen om til en specifik sygdom. Bruges i 'PickUp.cs'. */
 	void SicknessSpawn (GameObject obj) {
 		switch (Random.Range (0, 4)) {
 		case 0:
@@ -91,4 +69,25 @@ public class Exploded : MonoBehaviour {
 		}
 	}
 
+	/** Gemmer data om hvem der er ramt og at der er én færre spillere i live. */
+	void SaveData (Collider other) {
+		GlobalControl gc = GlobalControl.instance;
+		// Opdater kills for den ramte spiller.
+		Hero hitHero = other.GetComponent<Hero> ();
+		hitHero.myKills--;
+		gc.playerKills [hitHero.myGlobalID] = hitHero.myKills;
+		// Hvis det ikke er selvmord, så opdateres kills for spilleren der har placeret bomben.
+		if (!placer.name.Equals (other.name)) {
+			Hero placerHero = placer.GetComponent<Hero> ();
+			placerHero.myKills++;
+			gc.playerKills [placerHero.myGlobalID] = placerHero.myKills;
+		}
+		// Fortæller GameState at der er én mindre spiller i live.
+		GameState gs;
+		if (SceneManager.GetActiveScene ().name.Equals ("Level1"))
+			gs = other.gameObject.GetComponentInParent<GameState> ();
+		else
+			gs = GameObject.Find ("GameGrid").GetComponent<GameState> ();
+		gs.livingPlayers--;
+	}
 }
