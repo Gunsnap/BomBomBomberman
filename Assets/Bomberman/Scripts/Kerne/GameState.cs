@@ -1,37 +1,32 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class GameState : MonoBehaviour {
-
 	public bool running;
 	public int livingPlayers;
 
 	float tidStart;
 
-	// Use this for initialization
 	void Start () {
 		running = true;
 		tidStart = Time.time + 3f;
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		if (Time.time > tidStart) {
-			if (running && livingPlayers < 2) {
+			if (running && livingPlayers < 2)
 				running = false;
-			}
 
-			if (!running) {
+			if (!running)
 				LoadNewScene ();
-			}
 		}
 	}
 
 	public void LoadNewScene () {
-		var gc = GlobalControl.instance;
-		gc.baneID = SceneManager.GetActiveScene ().name;
+		// Gemmer hvor vi kommer fra, så vi kan komme tilbage.
+		GlobalControl.instance.baneID = SceneManager.GetActiveScene ().name;
 
+		// Loader scenen med overblik over hvem der har vundet og sådan noget.
 		SceneManager.LoadScene ("UIScoreOverview");
 	}
 }

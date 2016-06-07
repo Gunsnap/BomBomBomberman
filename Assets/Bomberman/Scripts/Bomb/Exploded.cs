@@ -25,7 +25,7 @@ public class Exploded : MonoBehaviour {
 			//Spawn pickUp, 1 ud af 3 gange.
 			if (Random.Range (0, 3) == 1) {
 				GameObject pickup = other.GetComponent<Spawner> ().SpawnElement (
-					                    other.gameObject, other.transform.position, new Vector3 (270, 0, 0), Random.Range (0, 3));
+					                    other.transform.position, new Vector3 (270, 0, 0), Random.Range (0, 3));
 
 				// Hvis det er en sygdom ændrer vi navnet så det kan bruges.
 				if (pickup.name.Contains ("Sickness"))

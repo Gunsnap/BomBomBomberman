@@ -117,7 +117,7 @@ public class Hero : MonoBehaviour {
 				placePos.x = (int)placePos.x + .5f;
 				placePos.y = (int)placePos.y + .5f;
 
-				GameObject TNT = sp.SpawnElement (gameObject, placePos, new Vector3 (270, 0, 0));
+				GameObject TNT = sp.SpawnElement (placePos, new Vector3 (270, 0, 0));
 				BombSplode bombe = TNT.gameObject.GetComponent<BombSplode> ();
 				bombe.bombDelay = fuseTime;
 				bombe.range = bombRange;

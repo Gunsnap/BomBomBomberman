@@ -36,7 +36,7 @@ public class BombSplode : MonoBehaviour {
 		Vector3 venstreVecDec = new Vector3 (0, 270, 90);
 
 		// Center
-		senesteFlamme = sp.SpawnElement (gameObject, bombPos, opVecDec);
+		senesteFlamme = sp.SpawnElement (bombPos, opVecDec);
 		senesteFlamme.GetComponent<Exploded> ().placer = placer;
 
 		// Mid & End
@@ -51,28 +51,28 @@ public class BombSplode : MonoBehaviour {
 			int element = i < range ? 1 : 2;
 
 			if (up) {
-				senesteFlamme = sp.SpawnElement (gameObject, bombPos + new Vector3 (0, i, 0), opVecDec, element);
+				senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (0, i, 0), opVecDec, element);
 				senesteFlamme.GetComponent<Exploded> ().placer = placer;
 				char ramte = ForbiddenTilesVores.CheckSquare (senesteFlamme.transform.position + new Vector3 (0, 1, 0));
 				up = setFalseAndDestroy (senesteFlamme, ramte, up);
 			}
 
 			if (down) {
-				senesteFlamme = sp.SpawnElement (gameObject, bombPos + new Vector3 (0, -i, 0), nedVecDec, element);
+				senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (0, -i, 0), nedVecDec, element);
 				senesteFlamme.GetComponent<Exploded> ().placer = placer;
 				char ramte = ForbiddenTilesVores.CheckSquare (senesteFlamme.transform.position + new Vector3 (0, -1, 0));
 				down = setFalseAndDestroy (senesteFlamme, ramte, down);
 			}
 
 			if (right) {
-				senesteFlamme = sp.SpawnElement (gameObject, bombPos + new Vector3 (i, 0, 0), hoejreVecDec, element);
+				senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (i, 0, 0), hoejreVecDec, element);
 				senesteFlamme.GetComponent<Exploded> ().placer = placer;
 				char ramte = ForbiddenTilesVores.CheckSquare (senesteFlamme.transform.position + new Vector3 (1, 0, 0));
 				right = setFalseAndDestroy (senesteFlamme, ramte, right);
 			}
 
 			if (left) {
-				senesteFlamme = sp.SpawnElement (gameObject, bombPos + new Vector3 (-i, 0, 0), venstreVecDec, element);
+				senesteFlamme = sp.SpawnElement (bombPos + new Vector3 (-i, 0, 0), venstreVecDec, element);
 				senesteFlamme.GetComponent<Exploded> ().placer = placer;
 				char ramte = ForbiddenTilesVores.CheckSquare (senesteFlamme.transform.position + new Vector3 (-1, 0, 0));
 				left = setFalseAndDestroy (senesteFlamme, ramte, left);

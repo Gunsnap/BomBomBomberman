@@ -2,7 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 /*
-	ABOUT THIS SCRIPT
+	ABOUT THIS SCRIPT (no longer valid, changed for Bomberman by DVS)
+	(Now uses char in stead of bool to see what kind of obstruction you hit.)
 	
 This script is not a MonoBehaviour, it's a public static class that doesn't
 inherit from anything. The class has three functions: it stores a
