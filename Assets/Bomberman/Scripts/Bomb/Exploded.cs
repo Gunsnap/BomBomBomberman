@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Exploded : MonoBehaviour {
@@ -53,6 +53,7 @@ public class Exploded : MonoBehaviour {
 
 	/** Laver sygdommen om til en specifik sygdom. Bruges i 'PickUp.cs'. */
 	void SicknessSpawn (GameObject obj) {
+		obj.transform.position -= new Vector3 (0, 0, .5f);
 		switch (Random.Range (0, 4)) {
 		case 0:
 			obj.name = "Fire-DownPickup";

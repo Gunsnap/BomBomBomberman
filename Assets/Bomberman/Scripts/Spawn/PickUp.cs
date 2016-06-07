@@ -42,8 +42,10 @@ public class PickUp : MonoBehaviour {
 			}
 
 			//Kill me!
-			if (skalDoe)
+			if (skalDoe) {
+				other.GetComponent<Hero> ().myPowerUpCount++;
 				DestroyObject (gameObject);
+			}
 		}
 	}
 

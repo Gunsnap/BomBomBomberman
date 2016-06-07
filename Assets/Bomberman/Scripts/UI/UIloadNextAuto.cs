@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class UIloadNextAuto : MonoBehaviour {
@@ -7,6 +7,9 @@ public class UIloadNextAuto : MonoBehaviour {
 	IEnumerator Start () {
 		// Starter med at vente i X sekunder, hvorefter resten af koden udføres.
 		yield return new WaitForSeconds (5f);
+		/*FIXME opdater countdown hvert sekund.
+		 * var noget = GetComponentsInChildren<GUIText> ();
+		 * Debug.Log (noget.name);*/
 
 		var gc = GlobalControl.instance;
 

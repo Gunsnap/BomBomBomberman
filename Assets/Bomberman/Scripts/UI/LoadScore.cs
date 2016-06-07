@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class LoadScore : MonoBehaviour {
 
@@ -15,16 +16,35 @@ public class LoadScore : MonoBehaviour {
 	public uint[] powerUpCount;
 
 	void Start () {
-		roundNr = GlobalControl.instance.roundNr + 1;
-		roundTotal = GlobalControl.instance.roundTotal;
+		var gc = GlobalControl.instance;
+		roundNr = gc.roundNr + 1;
+		roundTotal = gc.roundTotal;
 
-		winner = GlobalControl.instance.winner;
+		winner = gc.winner;
 
-		playerName = GlobalControl.instance.playerName;
-		playerNick = GlobalControl.instance.playerNick;
-		playerKills = GlobalControl.instance.playerKills;
-		playerDistance = GlobalControl.instance.playerDistance;
-		powerUpCount = GlobalControl.instance.powerUpCount;
+		playerName = gc.playerName;
+		playerNick = gc.playerNick;
+		playerKills = gc.playerKills;
+		playerDistance = gc.playerDistance;
+		powerUpCount = gc.powerUpCount;
+
+		int j = playerNick.Length - 1;
+		Text[] egenskaber = GetComponentInChildren<Image> ().GetComponentsInChildren<Text> ();
+		for (int i = 0; i < egenskaber.Length; i++) {
+			Text navn = egenskaber [i];
+			if (!navn.name.Contains ("lbl") && navn.name.Equals ("Name")) {
+				Text kills = egenskaber [i + 1];
+				Text points = egenskaber [i + 2];
+				Text powers = egenskaber [i + 3];
+				if (j >= 0) {
+					navn.text = playerNick [j];
+					kills.text = playerKills [j].ToString ();
+					points.text = playerDistance [j].ToString ();
+					powers.text = powerUpCount [j].ToString ();
+					j--;
+				}
+			}
+		}
 
 //		Debug.Log ("Runde " + roundNr + " af " + roundTotal);
 //		//Debug.Log ("Vinder denne runde: " + winner [roundNr - 1]);
