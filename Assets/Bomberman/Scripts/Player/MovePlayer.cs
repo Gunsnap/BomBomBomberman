@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class MovePlayer : MonoBehaviour {
-
 	// Movement
 	/// <summary> The grid of the world!.</summary>
 	private GFRectGrid grid;
@@ -74,7 +72,6 @@ public class MovePlayer : MonoBehaviour {
 				}
 			}
 		}
-
 
 	}
 	//Lukker Update

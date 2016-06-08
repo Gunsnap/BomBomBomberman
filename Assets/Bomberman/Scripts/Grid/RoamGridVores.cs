@@ -15,7 +15,6 @@ accessible to all objects in the scene.
 */
 
 public class RoamGridVores : MonoBehaviour {
-
 	private GFRectGrid grid;
 	public float roamingTime = 1.0f;
 	//how long it takes to move from one tile to another

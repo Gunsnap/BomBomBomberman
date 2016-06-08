@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class GlobalControl : MonoBehaviour {
 	public static GlobalControl instance;

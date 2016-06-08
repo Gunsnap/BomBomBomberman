@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Hero : MonoBehaviour {
@@ -133,8 +131,5 @@ public class Hero : MonoBehaviour {
 				fuseTime = 3.5f;
 			}
 		}
-
 	}
-	// Lukker update
 }
-// Lukker class

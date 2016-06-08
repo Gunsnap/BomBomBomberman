@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class LoadScore : MonoBehaviour {
-
 	public uint roundNr;
 	public uint roundTotal;
 
